@@ -84,10 +84,10 @@ public class Robot9330 {
 
 
         //Reverse Motors
-        motorDriveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //motorDriveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         //motorDriveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorDriveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorDriveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //motorDriveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //motorDriveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         
         //Initalize the robots IMU orientation.
         myRobotOrientation = newIMU.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
