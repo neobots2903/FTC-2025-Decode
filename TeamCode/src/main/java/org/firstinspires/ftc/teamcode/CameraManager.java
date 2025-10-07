@@ -63,6 +63,18 @@ public class CameraManager {
     }
 
 
+    /*
+    * Returns a 32 bit integer of the total april tags detected.
+    * No other data about april tags will be returned, just the size
+    * of the array/list holding all detected tags.
+    * */
+    public int getTotalTagsDetected() {
+        int totalTagDetections = 0;
+
+
+        return totalTagDetections;
+    }
+
 
     //Returns all april tag ids detected by
     //camera one
