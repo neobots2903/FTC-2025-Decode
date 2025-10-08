@@ -49,6 +49,12 @@ public class Robot9330 {
     double frontLeftPower, frontRightPower, backRightPower, backLeftPower; //Power for each of the motors.
 
 
+    //Our camera manager.
+    //Detects april tags and has some utiltites built in to return data
+    //reguarding the total amount of tags detected.
+    CameraManager camera;
+
+
     //Constructor; Robot inits from here.
     public Robot9330(OpMode opMode) {
         this.opMode = opMode;
@@ -56,7 +62,15 @@ public class Robot9330 {
         //Old IMU intialization.
         //imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
         //imu.initialize(parameters);
-        
+
+        //Make "camera" an instance of "CameraManager"
+        //Pass an instance of "OpMode" to it so we can
+        //intialize hardware on the hardware map.
+        //The camera manager contains utilites for us
+        //to detect april tags and recieve data reguarding
+        //april tags within vision range.
+        camera = new CameraManager(opMode);
+
         //Get IMU from hardware.
         newIMU = opMode.hardwareMap.get(IMU.class, "imu");
 
@@ -111,7 +125,10 @@ public class Robot9330 {
     
     //Robot move method. Moves the robot based on the controller stick inputs.
     public void move(double x, double y, double rx) {
-        
+
+        opMode.telemetry.addData("Tag detection", camera.getTotalTagsDetected());
+        opMode.telemetry.update();
+
         //Get the rotation of the robot as a degree from its starting position.
         //The rotation we are getting is measured in DEGREES from 360-0.
         botHeading = newIMU.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);

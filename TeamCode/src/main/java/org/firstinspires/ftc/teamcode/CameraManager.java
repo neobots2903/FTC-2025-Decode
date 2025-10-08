@@ -4,13 +4,23 @@
 * */
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-//Test
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+
 
 public class CameraManager {
 
@@ -71,6 +81,16 @@ public class CameraManager {
     public int getTotalTagsDetected() {
         int totalTagDetections = 0;
 
+        //Create a list to hold all detected april tags.
+        //Take the "tagProcessor" which is "AprilTagProcessor" and return
+        //instances of all tags detected by it into our list.
+        //We can then get the length of this list to list of the
+        //total detected tags.
+        List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+
+        //Get the length of our detections list.
+        //This is the total tags detected.
+        totalTagDetections = currentDetections.size();
 
         return totalTagDetections;
     }
