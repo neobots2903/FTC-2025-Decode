@@ -126,9 +126,6 @@ public class Robot9330 {
     //Robot move method. Moves the robot based on the controller stick inputs.
     public void move(double x, double y, double rx) {
 
-        opMode.telemetry.addData("Tag detection", camera.getTotalTagsDetected());
-        opMode.telemetry.update();
-
         //Get the rotation of the robot as a degree from its starting position.
         //The rotation we are getting is measured in DEGREES from 360-0.
         botHeading = newIMU.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
