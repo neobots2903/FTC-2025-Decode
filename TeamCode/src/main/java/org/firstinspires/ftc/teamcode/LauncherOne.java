@@ -34,6 +34,9 @@ public class LauncherOne {
         //an instance.
         this.opMode = opMode;
 
+        //Intialize the color sensors
+        initColorSensors();
+
     }
 
 

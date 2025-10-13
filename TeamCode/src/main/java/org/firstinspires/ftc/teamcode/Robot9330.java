@@ -49,6 +49,12 @@ public class Robot9330 {
     double frontLeftPower, frontRightPower, backRightPower, backLeftPower; //Power for each of the motors.
 
 
+    //The robots launcher system.
+    //We use this system to launch balls and other objects
+    //using our robot.
+    LauncherOne launcher;
+
+
     //Constructor; Robot inits from here.
     public Robot9330(OpMode opMode) {
         this.opMode = opMode;
@@ -92,6 +98,9 @@ public class Robot9330 {
         //Initalize the robots IMU orientation.
         myRobotOrientation = newIMU.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
+        //Setup the robots launcher system
+        launcher = new LauncherOne(opMode);
+
     }
     
     //Runs the motors continuesly, as a test.
@@ -111,7 +120,10 @@ public class Robot9330 {
     
     //Robot move method. Moves the robot based on the controller stick inputs.
     public void move(double x, double y, double rx) {
-        
+
+        opMode.telemetry.addData("Blue seen: ", launcher.launcherColorSensor_getColor("BLUE"));
+        opMode.telemetry.update();
+
         //Get the rotation of the robot as a degree from its starting position.
         //The rotation we are getting is measured in DEGREES from 360-0.
         botHeading = newIMU.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
