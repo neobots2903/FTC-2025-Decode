@@ -17,11 +17,35 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TeleOp", group="Linear OpMode")
 public class TeleOpOne extends LinearOpMode {
-    
+
+
+    //Variables for gamepad1, reguarding how
+    //far left or right the sticks have moved from
+    //dezone (center) (0, 0)
     double gamePadOne_LeftStick_X = 0;
     double gamePadOne_LeftStick_Y = 0;
     double gamePadOne_RightStick_X = 0;
 
+
+    //Launcher variable, if this is true,
+    //the launcher is actively running. If false,
+    //then its not. We use this when determining
+    //if we want to shut off or power on the launcher,
+    //because y is used as a toggle and we use the same button
+    //"y" to toggle the motor on or off.
+    boolean launcherRunning = false;
+
+
+    //Launcher Variable, this represents
+    //the application cycles (frames) of the
+    //teleop loop that have passed since the
+    //launcher was toggled on or off.
+    //This prevents the d-bounce from
+    //the y-button all in two frames (I.E.
+    //the user has time to release the Y button,
+    //so that it doesn't switch the launcher straight
+    //off).
+    int cyclesSinceLauncherToggled = 0;
 
 
     //SPEED MULTIPLIER
@@ -50,8 +74,43 @@ public class TeleOpOne extends LinearOpMode {
                 robot.resetHeadless();
             }
 
+            //Controls for the launcher motors. WHen 'y' is pressed,
+            //we will run the launcher, pressing it again will kill
+            //the launcher motors. (Acts like a toggle)
+            if (gamepad2.y && launcherRunning == false && cyclesSinceLauncherToggled > 10) {
+
+                //Run the robot launcher.
+                robot.runLauncher();
+
+                //Set the launcherRunning to true,
+                //so that we know the launcher is running.
+                launcherRunning = true;
+
+                //Reset the cycles since the launcher toggle
+                //button was pressed, to prevent d-bounce.
+                cyclesSinceLauncherToggled = 0;
+
+            } else if (gamepad2.y && launcherRunning == true && cyclesSinceLauncherToggled > 10) {
+
+                //Stop the launcher from running.
+                robot.killLauncher();
+
+                //Set the launcherRunning to false,
+                //so that we know the launcher is not running.
+                launcherRunning = false;
+
+                //Reset the cycles since the launcher toggle
+                //button was pressed, to prevent d-bounce.
+                cyclesSinceLauncherToggled = 0;
+            }
+
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
 
+            //Update the cycles that have passed
+            //since we toggled the launcher. Just
+            //add in one application cycle, since
+            //another application loop has completed.
+            cyclesSinceLauncherToggled++;
         }
     }
 

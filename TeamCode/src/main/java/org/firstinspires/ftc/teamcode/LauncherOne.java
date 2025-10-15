@@ -7,6 +7,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /*
  * This class manages the robots launching system.
@@ -25,6 +27,12 @@ public class LauncherOne {
     //color it is.
     ColorSensor launcherColorSensor;
 
+    //These are motors that launch the balls.
+    //launchMotorTwo is spinning in reverse since both
+    //these motors are on the same shaft.
+    DcMotor launchMotorOne;
+    DcMotor launchMotorTwo;
+
     //Constructor
     public LauncherOne(OpMode opMode) {
 
@@ -37,6 +45,21 @@ public class LauncherOne {
         //Intialize the color sensors
         initColorSensors();
 
+        //Initalizing the Motors
+        initMotors();
+
+    }
+
+
+    private void initMotors() {
+        launchMotorOne = opMode.hardwareMap.get(DcMotor.class, "launchMotorOne");
+        launchMotorTwo = opMode.hardwareMap.get(DcMotor.class, "launchMotorTwo");
+
+        //Reverse the launchMotorTwo, since launchMotorTwo
+        //and launchMotorOne are both on the same shaft, with opposite
+        //input directions, this should make both motors spin the shaft
+        //in the same direction.
+        launchMotorTwo.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
@@ -47,6 +70,28 @@ public class LauncherOne {
         //Intialize the launcher color sensor from
         //the hardware map.
         launcherColorSensor = opMode.hardwareMap.get(ColorSensor.class, "launcherColorSensor");
+    }
+
+
+    //Spin the launcher Motors to shoot the ball
+    //Spins the motors indefiently until we call
+    //the stop function. "stopLauncher()"
+    //----
+    //ARGUMENTS:
+    //-"power" -> Runs the launch motors at this power
+    public void runLauncher(double power) {
+        launchMotorOne.setPower(power);
+        launchMotorTwo.setPower(power);
+    }
+
+
+    //Kills the launcher, stops all motors
+    //at 0.0 power.
+    //launcherMotorOne and launcherMotorTwo
+    //will stop (0 power)
+    public void killLauncher() {
+        launchMotorOne.setPower(0.0);
+        launchMotorTwo.setPower(0.0);
     }
 
 

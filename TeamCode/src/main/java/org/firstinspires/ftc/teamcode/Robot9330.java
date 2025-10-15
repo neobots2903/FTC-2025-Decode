@@ -102,7 +102,20 @@ public class Robot9330 {
         launcher = new LauncherOne(opMode);
 
     }
-    
+
+
+    //Runs the launcher indefently at 1.0 (max)
+    //power until "killLauncher()" is called.
+    public void runLauncher() {
+        launcher.runLauncher(1.0);
+    }
+
+    //Kills the launcher motors by setting
+    //the power to 0.0 (complete stop).
+    public void killLauncher() {
+        launcher.killLauncher();
+    }
+
     //Runs the motors continuesly, as a test.
     public void runMotorsIndefentlyTest() {
         motorDriveFrontLeft.setPower(1);
@@ -120,9 +133,6 @@ public class Robot9330 {
     
     //Robot move method. Moves the robot based on the controller stick inputs.
     public void move(double x, double y, double rx) {
-
-        opMode.telemetry.addData("Blue seen: ", launcher.launcherColorSensor_getColor("BLUE"));
-        opMode.telemetry.update();
 
         //Get the rotation of the robot as a degree from its starting position.
         //The rotation we are getting is measured in DEGREES from 360-0.
