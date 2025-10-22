@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This class manages the robots launching system.
@@ -20,18 +21,25 @@ public class LauncherOne {
     //Allows us to access the hardware configuration
     //and set up motors, sensors, etc.
     //Allows for communication to the telemetry system.
-    OpMode opMode;
+    private OpMode opMode;
 
     //This color sensor is used in the launcher
     //to detect if a ball is present, or what
     //color it is.
-    ColorSensor launcherColorSensor;
+    private ColorSensor launcherColorSensor;
 
     //These are motors that launch the balls.
     //launchMotorTwo is spinning in reverse since both
     //these motors are on the same shaft.
-    DcMotor launchMotorOne;
-    DcMotor launchMotorTwo;
+    private DcMotor launchMotorOne;
+    private DcMotor launchMotorTwo;
+
+    //The servo for dropping the ball/object into the launcher!
+    private Servo shooterInput;
+    double shooterInputOpenPosition = 1.0; //Position for the shooter input to be open.
+    double shooterInputClosedPosition = 0.0; //Position for the shooter input to be closed.
+
+
 
     //Constructor
     public LauncherOne(OpMode opMode) {
@@ -48,6 +56,18 @@ public class LauncherOne {
         //Initalizing the Motors
         initMotors();
 
+        //Intialize all servos onboard the robot
+        initServos();
+    }
+
+
+    //Intializes the servos inside the robot.
+    //Called from the constructor of this class.
+    private void initServos() {
+
+        //Create an instance of the shooter input servo in
+        //the opmode hardware map.
+        shooterInput = opMode.hardwareMap.get(Servo.class, "shooterInput");
     }
 
 
@@ -70,6 +90,23 @@ public class LauncherOne {
         //Intialize the launcher color sensor from
         //the hardware map.
         launcherColorSensor = opMode.hardwareMap.get(ColorSensor.class, "launcherColorSensor");
+    }
+
+
+    //Moves the shooter input servo
+    //to pivot so that the ball/object drops
+    //into the shooter to fire.
+    public void inputIntoShooter() {
+        shooterInput.setPosition(shooterInputOpenPosition);
+    }
+
+
+    //Moves the shooter input servo
+    //to pivot so that the input is closed,
+    //so nothing should be able to be shot out
+    //of the launcher.
+    public void closeInputIntoShooter() {
+        shooterInput.setPosition(shooterInputClosedPosition);
     }
 
 
