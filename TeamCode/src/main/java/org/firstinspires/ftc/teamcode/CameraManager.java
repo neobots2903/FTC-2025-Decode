@@ -14,6 +14,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -31,6 +32,11 @@ public class CameraManager {
     * */
     private AprilTagProcessor tagProcessor;
 
+    /*
+    * The opmode used for hardware map
+    * and to print to the telemetry.
+    * */
+    private OpMode opMode;
 
     /*
     * The vision portal, which allows us to access
@@ -61,6 +67,10 @@ public class CameraManager {
     *
     * */
     private void initCameraOne(OpMode opMode) {
+
+        //Set the opmode so we can use telemetry,
+        //etc
+        this.opMode = opMode;
 
         //Setup the april tag processor with its default paramters
         //and settings. "The easy way"
@@ -93,6 +103,40 @@ public class CameraManager {
         totalTagDetections = currentDetections.size();
 
         return totalTagDetections;
+    }
+
+
+    //Returns an array containing all visible april tag
+    //ids in the form of int
+    //Returns "-1" if no tags found.
+    public List<Integer> getAllAprilTag_ids() {
+
+        //List of all tag ids
+        List<Integer> aprilTagIds = new ArrayList<>();
+
+        //Create a list to hold all detected april tags.
+        //Take the "tagProcessor" which is "AprilTagProcessor" and return
+        //instances of all tags detected by it into our list.
+        //We can then get the length of this list to list of the
+        //total detected tags.
+        List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+
+        //Loop through all detected april tags,
+        //append each detected id onto the end of the aprilTagsIds array.
+        for (AprilTagDetection detection : currentDetections) {
+            aprilTagIds.add(detection.id);
+        }
+
+        //If no tags where detected, we can't return an id, so return -1
+        //as a place holder.
+        if (aprilTagIds.size() == 0) {
+            aprilTagIds.add(-1);
+        }
+
+
+        //Return an array of integers, of each tag
+        //id we detected.
+        return aprilTagIds;
     }
 
 
