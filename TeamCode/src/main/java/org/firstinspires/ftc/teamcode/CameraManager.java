@@ -140,6 +140,38 @@ public class CameraManager {
     }
 
 
+    //Searchs tag detections,
+    //and returns and instance of the april tag
+    //by the id of argument 1 "id"
+    //
+    //Arguments:
+    //"id" -> The id of the april tag to find.
+    public AprilTagDetection findTag(int id) {
+
+        //All april tags currently detected
+        List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+
+        //This will hold the instance of the tag we detected.
+        AprilTagDetection aprilTag = null;
+
+        //Loop through all detected april tags,
+        //if the id of the tag matches to the one
+        //we are searching for, then set "aprilTag" as
+        //an instance of the tag.
+        for (AprilTagDetection detection : currentDetections) {
+
+            //If the tag id matches
+            //the id of the tag we are searching for,
+            //then set "aprilTag" the instance we return as
+            //an instance of detection.
+            if (detection.id == id) {
+                aprilTag = detection;
+            }
+        }
+
+        return aprilTag;
+    }
+
     //Returns all april tag ids detected by
     //camera one
     public void getAllTagIds_cameraOne() {
