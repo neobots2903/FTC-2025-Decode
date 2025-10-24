@@ -26,7 +26,7 @@ public class LauncherOne {
     //This color sensor is used in the launcher
     //to detect if a ball is present, or what
     //color it is.
-    private ColorSensor launcherColorSensor;
+    //private ColorSensor launcherColorSensor;
 
     //These are motors that launch the balls.
     //launchMotorTwo is spinning in reverse since both
@@ -51,7 +51,7 @@ public class LauncherOne {
         this.opMode = opMode;
 
         //Intialize the color sensors
-        initColorSensors();
+        //initColorSensors();
 
         //Initalizing the Motors
         initMotors();
@@ -85,12 +85,12 @@ public class LauncherOne {
 
     //Sets up the color sensors
     //we are using in the launcher system
-    private void initColorSensors() {
+    /*private void initColorSensors() {
 
         //Intialize the launcher color sensor from
         //the hardware map.
         launcherColorSensor = opMode.hardwareMap.get(ColorSensor.class, "launcherColorSensor");
-    }
+    }*/
 
 
     //Moves the shooter input servo
@@ -143,7 +143,7 @@ public class LauncherOne {
     //"GREEN" = green value
     //"BLUE" = blue value
     //"ALPHA" = color opacity value
-    public int launcherColorSensor_getColor(String color) {
+    /*public int launcherColorSensor_getColor(String color) {
 
         //Will hold the value we want to return, as requested by
         //first argument
@@ -172,5 +172,5 @@ public class LauncherOne {
         }
 
         return value;
-    }
+    }*/
 }
