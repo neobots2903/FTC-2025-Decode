@@ -77,7 +77,7 @@ public class TeleOpOne extends LinearOpMode {
             //Controls for the launcher motors. WHen 'y' is pressed,
             //we will run the launcher, pressing it again will kill
             //the launcher motors. (Acts like a toggle)
-            if (gamepad2.y && launcherRunning == false && cyclesSinceLauncherToggled > 10) {
+            if (gamepad2.y && launcherRunning == false && cyclesSinceLauncherToggled > 30) {
 
                 //Run the robot launcher.
                 robot.runLauncher();
