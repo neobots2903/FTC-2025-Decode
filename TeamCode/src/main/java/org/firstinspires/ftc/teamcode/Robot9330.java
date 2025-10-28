@@ -123,7 +123,21 @@ public class Robot9330 {
         motorDriveBackLeft.setPower(1);
         motorDriveBackRight.setPower(1);
     }
-    
+
+
+    //Use the shooter interface to input
+    //the ball into the shooter
+    public void runShooterInput() {
+        launcher.inputIntoShooter();
+    }
+
+    //Use the shooter interface to kill the input
+    //the ball into the shooter
+    public void killShooterInput() {
+        launcher.stopInputIntoShooter();
+    }
+
+
     
     //Spins one motor; Used for testing.
     public void spinOneMotor() {

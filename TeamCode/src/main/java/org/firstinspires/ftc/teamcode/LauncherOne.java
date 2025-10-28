@@ -6,6 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -35,7 +36,7 @@ public class LauncherOne {
     private DcMotor launchMotorTwo;
 
     //The servo for dropping the ball/object into the launcher!
-    private Servo shooterInput;
+    private CRServo shooterInput;
     double shooterInputOpenPosition = 1.0; //Position for the shooter input to be open.
     double shooterInputClosedPosition = 0.0; //Position for the shooter input to be closed.
 
@@ -67,7 +68,7 @@ public class LauncherOne {
 
         //Create an instance of the shooter input servo in
         //the opmode hardware map.
-        shooterInput = opMode.hardwareMap.get(Servo.class, "shooterInput");
+        shooterInput = opMode.hardwareMap.get(CRServo.class, "shooterInput");
     }
 
 
@@ -95,10 +96,15 @@ public class LauncherOne {
 
 
     //Moves the shooter input servo
-    //to pivot so that the ball/object drops
-    //into the shooter to fire.
+    //to feed a ball into the shooter
     public void inputIntoShooter() {
-        shooterInput.setPosition(shooterInputOpenPosition);
+        shooterInput.setPower(0.2);
+    }
+
+    //Stops the servo feeding balls
+    //into the shooter
+    public void stopInputIntoShooter() {
+        shooterInput.setPower(0.0);
     }
 
 
@@ -106,9 +112,9 @@ public class LauncherOne {
     //to pivot so that the input is closed,
     //so nothing should be able to be shot out
     //of the launcher.
-    public void closeInputIntoShooter() {
-        shooterInput.setPosition(shooterInputClosedPosition);
-    }
+    //public void closeInputIntoShooter() {
+    //    shooterInput.setPosition(shooterInputClosedPosition);
+    //}
 
 
     //Spin the launcher Motors to shoot the ball

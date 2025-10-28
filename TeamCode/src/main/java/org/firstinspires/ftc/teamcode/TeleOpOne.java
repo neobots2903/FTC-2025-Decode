@@ -26,6 +26,17 @@ public class TeleOpOne extends LinearOpMode {
     double gamePadOne_LeftStick_Y = 0;
     double gamePadOne_RightStick_X = 0;
 
+    //Total time to wait to prevent debounce in frames
+    //for various systems.
+    int debounceWeightTime_forShooter = 30; //Debounce wait time for the shooter
+    int debounceWaitTime_forInput = 30; //Debounce wait time for the input
+
+    //The total cycles that have passed since
+    //the shooter inputted another ball.
+    //In frames (app cycles).
+    //Used to prevent debounce for running this system.
+    int cyclesSinceInputToggled = 0;
+
 
     //Launcher variable, if this is true,
     //the launcher is actively running. If false,
@@ -35,6 +46,7 @@ public class TeleOpOne extends LinearOpMode {
     //"y" to toggle the motor on or off.
     boolean launcherRunning = false;
 
+    boolean inputRunning = false;
 
     //Launcher Variable, this represents
     //the application cycles (frames) of the
@@ -77,7 +89,7 @@ public class TeleOpOne extends LinearOpMode {
             //Controls for the launcher motors. WHen 'y' is pressed,
             //we will run the launcher, pressing it again will kill
             //the launcher motors. (Acts like a toggle)
-            if (gamepad2.y && launcherRunning == false && cyclesSinceLauncherToggled > 30) {
+            if (gamepad2.y && launcherRunning == false && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
 
                 //Run the robot launcher.
                 robot.runLauncher();
@@ -90,7 +102,7 @@ public class TeleOpOne extends LinearOpMode {
                 //button was pressed, to prevent d-bounce.
                 cyclesSinceLauncherToggled = 0;
 
-            } else if (gamepad2.y && launcherRunning == true && cyclesSinceLauncherToggled > 10) {
+            } else if (gamepad2.y && launcherRunning == true && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
 
                 //Stop the launcher from running.
                 robot.killLauncher();
@@ -104,7 +116,34 @@ public class TeleOpOne extends LinearOpMode {
                 cyclesSinceLauncherToggled = 0;
             }
 
+
+            //Control system for the input into the shooter.
+            //Allows the operator to input balls into the shooter
+            if (gamepad2.b && cyclesSinceInputToggled > debounceWaitTime_forInput) {
+
+                if (inputRunning == false) {
+                    robot.runShooterInput();
+                    inputRunning = true;
+                } else {
+                    robot.killShooterInput();
+                    inputRunning = false;
+                }
+
+                //Reset the total amount of application
+                //cycles (frames) that have passed since
+                //this action was ran.
+                cyclesSinceInputToggled = 0;
+            }
+
+
+
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
+
+
+            //Update the total cycles that have
+            //passed since we ran the input
+            //for the shooter to input a ball
+            cyclesSinceInputToggled++;
 
             //Update the cycles that have passed
             //since we toggled the launcher. Just
