@@ -124,7 +124,7 @@ public class TeleOpOne extends LinearOpMode {
                 if (inputRunning == false) {
                     robot.runShooterInput();
                     inputRunning = true;
-                } else {
+                } else if (inputRunning == true) {
                     robot.killShooterInput();
                     inputRunning = false;
                 }

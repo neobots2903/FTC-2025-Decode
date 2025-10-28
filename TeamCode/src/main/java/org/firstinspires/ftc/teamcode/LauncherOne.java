@@ -98,7 +98,7 @@ public class LauncherOne {
     //Moves the shooter input servo
     //to feed a ball into the shooter
     public void inputIntoShooter() {
-        shooterInput.setPower(0.2);
+        shooterInput.setPower(1.0);
     }
 
     //Stops the servo feeding balls
