@@ -142,6 +142,20 @@ public class Robot9330 {
     }
 
 
+    //Locks the rear tires of the robot in brake mode.
+    //Used for stability or drifting
+    public void engage_handbrake() {
+        motorDriveBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorDriveBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+
+    //Disengages the robots handbrake, unlocking the back tires
+    public void disengage_handbrake() {
+        motorDriveBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorDriveBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     
     //Spins one motor; Used for testing.
     public void spinOneMotor() {

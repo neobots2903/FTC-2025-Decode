@@ -89,10 +89,10 @@ public class TeleOpOne extends LinearOpMode {
             //Controls for the launcher motors. WHen 'y' is pressed,
             //we will run the launcher, pressing it again will kill
             //the launcher motors. (Acts like a toggle)
-            /*if (gamepad2.y && launcherRunning == false && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
+            if (gamepad1.y && launcherRunning == false && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
 
                 //Run the robot launcher.
-                robot.runLauncher();
+                robot.engage_handbrake();
 
                 //Set the launcherRunning to true,
                 //so that we know the launcher is running.
@@ -102,10 +102,10 @@ public class TeleOpOne extends LinearOpMode {
                 //button was pressed, to prevent d-bounce.
                 cyclesSinceLauncherToggled = 0;
 
-            } else if (gamepad2.y && launcherRunning == true && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
+            } else if (gamepad1.y && launcherRunning == true && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
 
                 //Stop the launcher from running.
-                robot.killLauncher();
+                robot.disengage_handbrake();
 
                 //Set the launcherRunning to false,
                 //so that we know the launcher is not running.
@@ -114,7 +114,7 @@ public class TeleOpOne extends LinearOpMode {
                 //Reset the cycles since the launcher toggle
                 //button was pressed, to prevent d-bounce.
                 cyclesSinceLauncherToggled = 0;
-            }*/
+            }
 
 
             //Run the robots launcher system using the right
