@@ -104,10 +104,14 @@ public class Robot9330 {
     }
 
 
-    //Runs the launcher indefently at 1.0 (max)
-    //power until "killLauncher()" is called.
-    public void runLauncher() {
-        launcher.runLauncher(1.0);
+    //Runs the launcher motor at the power
+    //of argument 1.
+    //
+    //Arguments:
+    //
+    //power -> float of the power to run the motors at
+    public void runLauncher(float power) {
+        launcher.runLauncher(power);
     }
 
     //Kills the launcher motors by setting
