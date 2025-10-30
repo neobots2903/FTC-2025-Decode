@@ -14,6 +14,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+
 @Autonomous
 public class blueAuto_towardsObelisk extends LinearOpMode {
 
@@ -43,9 +45,22 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
 
 
         //Start the autonomous
-        if (opModeIsActive()) {
+        while (opModeIsActive()) {
 
-            telemetry.addData("April tag position", camera.findTag(24).ftcPose);
+            AprilTagDetection tag = camera.findTag(24);
+
+            if (tag != null) {
+                telemetry.addData("X", tag.ftcPose.x);
+                telemetry.addData("Y", tag.ftcPose.y);
+                telemetry.addData("Z", tag.ftcPose.z);
+                telemetry.addData("YAW", tag.ftcPose.yaw);
+                telemetry.addData("ROLL", tag.ftcPose.roll);
+                telemetry.addData("BEARING", tag.ftcPose.bearing);
+                telemetry.addData("PITCH", tag.ftcPose.pitch);
+                telemetry.addData("RANGE", tag.ftcPose.range);
+                telemetry.addData("ELEVATION", tag.ftcPose.elevation);
+                telemetry.addData("ITS PASTA DAY", 1);
+            }
             telemetry.update();
 
         }
