@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -32,8 +33,8 @@ public class LauncherOne {
     //These are motors that launch the balls.
     //launchMotorTwo is spinning in reverse since both
     //these motors are on the same shaft.
-    private DcMotor launchMotorOne;
-    private DcMotor launchMotorTwo;
+    private DcMotorEx launchMotorOne;
+    private DcMotorEx launchMotorTwo;
 
 
     //Info for the launcher motors.
@@ -82,8 +83,8 @@ public class LauncherOne {
 
 
     private void initMotors() {
-        launchMotorOne = opMode.hardwareMap.get(DcMotor.class, "launchMotorOne");
-        launchMotorTwo = opMode.hardwareMap.get(DcMotor.class, "launchMotorTwo");
+        launchMotorOne = opMode.hardwareMap.get(DcMotorEx.class, "launchMotorOne");
+        launchMotorTwo = opMode.hardwareMap.get(DcMotorEx.class, "launchMotorTwo");
 
         //Reverse the launchMotorTwo, since launchMotorTwo
         //and launchMotorOne are both on the same shaft, with opposite
@@ -145,6 +146,28 @@ public class LauncherOne {
     public void killLauncher() {
         launchMotorOne.setPower(0.0);
         launchMotorTwo.setPower(0.0);
+    }
+
+
+    //Runs the launcher at the set RPM
+    //for consistent launches
+    public void runLauncherAtSetRPM() {
+
+        //Run both the motors at the set velocity (shooter_rpm)
+        launchMotorOne.setVelocity(ticks_per_rotation * shooter_rpm);
+        launchMotorTwo.setVelocity(ticks_per_rotation * shooter_rpm);
+
+    }
+
+    //stops the launcher at the set RPM
+    //for consistent launches; Sets velocity
+    //of the shooter motors to 0.
+    public void stopLauncherAtSetRPM() {
+
+        //Run both the motors at the set velocity (shooter_rpm)
+        launchMotorOne.setVelocity(0.0);
+        launchMotorTwo.setVelocity(0.0);
+
     }
 
 
