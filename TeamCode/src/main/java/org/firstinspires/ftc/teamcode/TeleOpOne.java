@@ -102,7 +102,7 @@ public class TeleOpOne extends LinearOpMode {
                 //button was pressed, to prevent d-bounce.
                 cyclesSinceLauncherToggled = 0;
 
-            } else if (gamepad2.a != true) {
+            } else if (gamepad2.a != true && gamepad2.right_trigger == 0.0) {
 
                 //Stop the launcher from running.
                 robot.launcher.stopLauncherAtSetRPM();
