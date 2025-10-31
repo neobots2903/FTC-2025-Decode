@@ -119,7 +119,9 @@ public class TeleOpOne extends LinearOpMode {
 
             //Run the robots launcher system using the right
             //trigger on the operator remote.
-            robot.runLauncher(gamepad2.right_trigger);
+            if (gamepad2.right_trigger > 0.0) {
+                robot.runLauncher(gamepad2.right_trigger);
+            }
 
             //Control system for the input into the shooter.
             //Allows the operator to input balls into the shooter
