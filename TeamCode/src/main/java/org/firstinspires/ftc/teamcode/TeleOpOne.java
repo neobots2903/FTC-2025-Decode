@@ -123,20 +123,10 @@ public class TeleOpOne extends LinearOpMode {
 
             //Control system for the input into the shooter.
             //Allows the operator to input balls into the shooter
-            if (gamepad2.b && cyclesSinceInputToggled > debounceWaitTime_forInput) {
-
-                if (inputRunning == false) {
-                    robot.runShooterInput();
-                    inputRunning = true;
-                } else if (inputRunning == true) {
-                    robot.killShooterInput();
-                    inputRunning = false;
-                }
-
-                //Reset the total amount of application
-                //cycles (frames) that have passed since
-                //this action was ran.
-                cyclesSinceInputToggled = 0;
+            if (gamepad2.b) {
+                robot.runShooterInput();
+            } else if (gamepad2.b != true) {
+                robot.killShooterInput();
             }
 
 
