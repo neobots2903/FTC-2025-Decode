@@ -17,11 +17,47 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TeleOp", group="Linear OpMode")
 public class TeleOpOne extends LinearOpMode {
-    
+
+
+    //Variables for gamepad1, reguarding how
+    //far left or right the sticks have moved from
+    //dezone (center) (0, 0)
     double gamePadOne_LeftStick_X = 0;
     double gamePadOne_LeftStick_Y = 0;
     double gamePadOne_RightStick_X = 0;
 
+    //Total time to wait to prevent debounce in frames
+    //for various systems.
+    int debounceWeightTime_forShooter = 30; //Debounce wait time for the shooter
+    int debounceWaitTime_forInput = 30; //Debounce wait time for the input
+
+    //The total cycles that have passed since
+    //the shooter inputted another ball.
+    //In frames (app cycles).
+    //Used to prevent debounce for running this system.
+    int cyclesSinceInputToggled = 0;
+
+
+    //Launcher variable, if this is true,
+    //the launcher is actively running. If false,
+    //then its not. We use this when determining
+    //if we want to shut off or power on the launcher,
+    //because y is used as a toggle and we use the same button
+    //"y" to toggle the motor on or off.
+    boolean launcherRunning = false;
+
+    boolean inputRunning = false;
+
+    //Launcher Variable, this represents
+    //the application cycles (frames) of the
+    //teleop loop that have passed since the
+    //launcher was toggled on or off.
+    //This prevents the d-bounce from
+    //the y-button all in two frames (I.E.
+    //the user has time to release the Y button,
+    //so that it doesn't switch the launcher straight
+    //off).
+    int cyclesSinceLauncherToggled = 0;
 
 
     //SPEED MULTIPLIER
@@ -50,8 +86,74 @@ public class TeleOpOne extends LinearOpMode {
                 robot.resetHeadless();
             }
 
+            //Controls for the launcher motors. WHen 'y' is pressed,
+            //we will run the launcher, pressing it again will kill
+            //the launcher motors. (Acts like a toggle)
+            /*if (gamepad1.y && launcherRunning == false && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
+
+                //Run the robot launcher.
+                robot.engage_handbrake();
+
+                //Set the launcherRunning to true,
+                //so that we know the launcher is running.
+                launcherRunning = true;
+
+                //Reset the cycles since the launcher toggle
+                //button was pressed, to prevent d-bounce.
+                cyclesSinceLauncherToggled = 0;
+
+            } else if (gamepad1.y && launcherRunning == true && cyclesSinceLauncherToggled > debounceWeightTime_forShooter) {
+
+                //Stop the launcher from running.
+                robot.disengage_handbrake();
+
+                //Set the launcherRunning to false,
+                //so that we know the launcher is not running.
+                launcherRunning = false;
+
+                //Reset the cycles since the launcher toggle
+                //button was pressed, to prevent d-bounce.
+                cyclesSinceLauncherToggled = 0;
+            }*/
+
+
+            //Run the robots launcher system using the right
+            //trigger on the operator remote.
+            robot.runLauncher(gamepad2.right_trigger);
+
+            //Control system for the input into the shooter.
+            //Allows the operator to input balls into the shooter
+            if (gamepad2.b && cyclesSinceInputToggled > debounceWaitTime_forInput) {
+
+                if (inputRunning == false) {
+                    robot.runShooterInput();
+                    inputRunning = true;
+                } else if (inputRunning == true) {
+                    robot.killShooterInput();
+                    inputRunning = false;
+                }
+
+                //Reset the total amount of application
+                //cycles (frames) that have passed since
+                //this action was ran.
+                cyclesSinceInputToggled = 0;
+            }
+
+
+
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
 
+
+            //Update the total cycles that have
+            //passed since we ran the input
+            //for the shooter to input a ball
+            cyclesSinceInputToggled++;
+
+            //Update the cycles that have passed
+            //since we toggled the launcher. Just
+            //add in one application cycle, since
+            //another application loop has completed.
+            cyclesSinceLauncherToggled++;
         }
     }
 

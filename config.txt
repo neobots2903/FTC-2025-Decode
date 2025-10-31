@@ -1,0 +1,8 @@
+Configuration of the motors, servos at hardware in hardware map:
+drive motor left front: control hub motor port 1
+drive motor right front: control hub motor port 2
+drive motor left back: control hub motor port 0
+drive motor right back: control hub motor port 3
+shooter motor two (right): expansion hub motor port 1
+shooter motor one (left): expansion hub motor port 0
+shooterInput servo: Control Hub Servo Port 5

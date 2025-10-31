@@ -53,6 +53,10 @@ public class Robot9330 {
     //Detects april tags and has some utiltites built in to return data
     //reguarding the total amount of tags detected.
     CameraManager camera;
+    //The robots launcher system.
+    //We use this system to launch balls and other objects
+    //using our robot.
+    LauncherOne launcher;
 
 
     //Constructor; Robot inits from here.
@@ -98,16 +102,36 @@ public class Robot9330 {
 
 
         //Reverse Motors
-        //motorDriveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        //motorDriveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        //motorDriveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        //motorDriveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorDriveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorDriveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorDriveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorDriveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         
         //Initalize the robots IMU orientation.
         myRobotOrientation = newIMU.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
+        //Setup the robots launcher system
+        launcher = new LauncherOne(opMode);
+
     }
-    
+
+
+    //Runs the launcher motor at the power
+    //of argument 1.
+    //
+    //Arguments:
+    //
+    //power -> float of the power to run the motors at
+    public void runLauncher(float power) {
+        launcher.runLauncher(power);
+    }
+
+    //Kills the launcher motors by setting
+    //the power to 0.0 (complete stop).
+    public void killLauncher() {
+        launcher.killLauncher();
+    }
+
     //Runs the motors continuesly, as a test.
     public void runMotorsIndefentlyTest() {
         motorDriveFrontLeft.setPower(1);
@@ -115,7 +139,35 @@ public class Robot9330 {
         motorDriveBackLeft.setPower(1);
         motorDriveBackRight.setPower(1);
     }
-    
+
+
+    //Use the shooter interface to input
+    //the ball into the shooter
+    public void runShooterInput() {
+        launcher.inputIntoShooter();
+    }
+
+    //Use the shooter interface to kill the input
+    //the ball into the shooter
+    public void killShooterInput() {
+        launcher.stopInputIntoShooter();
+    }
+
+
+    //Locks the rear tires of the robot in brake mode.
+    //Used for stability or drifting
+    public void engage_handbrake() {
+        motorDriveBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorDriveBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+
+    //Disengages the robots handbrake, unlocking the back tires
+    public void disengage_handbrake() {
+        motorDriveBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorDriveBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     
     //Spins one motor; Used for testing.
     public void spinOneMotor() {
@@ -125,12 +177,6 @@ public class Robot9330 {
     
     //Robot move method. Moves the robot based on the controller stick inputs.
     public void move(double x, double y, double rx) {
-
-
-        opMode.telemetry.addData("Tags detected: ", camera.getTotalTagsDetected());
-        opMode.telemetry.addData("First Tag ID: ", camera.getAllAprilTag_ids().get(0));
-        opMode.telemetry.update();
-
 
         //Get the rotation of the robot as a degree from its starting position.
         //The rotation we are getting is measured in DEGREES from 360-0.
