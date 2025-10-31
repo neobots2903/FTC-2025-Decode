@@ -4,13 +4,24 @@
 * */
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-//Test
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+
 
 public class CameraManager {
 
@@ -21,6 +32,11 @@ public class CameraManager {
     * */
     private AprilTagProcessor tagProcessor;
 
+    /*
+    * The opmode used for hardware map
+    * and to print to the telemetry.
+    * */
+    private OpMode opMode;
 
     /*
     * The vision portal, which allows us to access
@@ -52,6 +68,10 @@ public class CameraManager {
     * */
     private void initCameraOne(OpMode opMode) {
 
+        //Set the opmode so we can use telemetry,
+        //etc
+        this.opMode = opMode;
+
         //Setup the april tag processor with its default paramters
         //and settings. "The easy way"
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
@@ -63,6 +83,93 @@ public class CameraManager {
     }
 
 
+    /*
+    * Returns a 32 bit integer of the total april tags detected.
+    * No other data about april tags will be returned, just the size
+    * of the array/list holding all detected tags.
+    * */
+    public int getTotalTagsDetected() {
+        int totalTagDetections = 0;
+
+        //Create a list to hold all detected april tags.
+        //Take the "tagProcessor" which is "AprilTagProcessor" and return
+        //instances of all tags detected by it into our list.
+        //We can then get the length of this list to list of the
+        //total detected tags.
+        List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+
+        //Get the length of our detections list.
+        //This is the total tags detected.
+        totalTagDetections = currentDetections.size();
+
+        return totalTagDetections;
+    }
+
+
+    //Returns an array containing all visible april tag
+    //ids in the form of int
+    //Returns "-1" if no tags found.
+    public List<Integer> getAllAprilTag_ids() {
+
+        //List of all tag ids
+        List<Integer> aprilTagIds = new ArrayList<>();
+
+        //Create a list to hold all detected april tags.
+        //Take the "tagProcessor" which is "AprilTagProcessor" and return
+        //instances of all tags detected by it into our list.
+        //We can then get the length of this list to list of the
+        //total detected tags.
+        List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+
+        //Loop through all detected april tags,
+        //append each detected id onto the end of the aprilTagsIds array.
+        for (AprilTagDetection detection : currentDetections) {
+            aprilTagIds.add(detection.id);
+        }
+
+        //If no tags where detected, we can't return an id, so return -1
+        //as a place holder.
+        if (aprilTagIds.size() == 0) {
+            aprilTagIds.add(-1);
+        }
+
+
+        //Return an array of integers, of each tag
+        //id we detected.
+        return aprilTagIds;
+    }
+
+
+    //Searchs tag detections,
+    //and returns and instance of the april tag
+    //by the id of argument 1 "id"
+    //
+    //Arguments:
+    //"id" -> The id of the april tag to find.
+    public AprilTagDetection findTag(int id) {
+
+        //All april tags currently detected
+        List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+
+        //This will hold the instance of the tag we detected.
+        AprilTagDetection aprilTag = null;
+
+        //Loop through all detected april tags,
+        //if the id of the tag matches to the one
+        //we are searching for, then set "aprilTag" as
+        //an instance of the tag.
+        for (AprilTagDetection detection : currentDetections) {
+
+            //If the tag id matches
+            //the id of the tag we are searching for,
+            //then set "aprilTag" the instance we return as
+            //an instance of detection.
+            if (detection.id == id) {
+                aprilTag = detection;
+            }
+        }
+        return aprilTag;
+    }
 
     //Returns all april tag ids detected by
     //camera one
