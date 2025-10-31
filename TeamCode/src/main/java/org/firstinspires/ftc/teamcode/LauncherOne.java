@@ -35,6 +35,15 @@ public class LauncherOne {
     private DcMotor launchMotorOne;
     private DcMotor launchMotorTwo;
 
+
+    //Info for the launcher motors.
+    //Reguarding ticks per rotation,
+    //RPM to run the shooter, etc.
+    int ticks_per_rotation = 1; //The total ticks for 1 rotation of the fly-wheel.
+    int shooter_rpm = 1200; //The RPM to run the shooter at.
+
+
+
     //The servo for dropping the ball/object into the launcher!
     private CRServo shooterInput;
     double shooterInputOpenPosition = 1.0; //Position for the shooter input to be open.

@@ -45,27 +45,45 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
 
 
         //Start the autonomous
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
 
-            AprilTagDetection tag = camera.findTag(24);
 
-            if (tag != null) {
-                telemetry.addData("X", tag.ftcPose.x);
-                telemetry.addData("Y", tag.ftcPose.y);
-                telemetry.addData("Z", tag.ftcPose.z);
-                telemetry.addData("YAW", tag.ftcPose.yaw);
-                telemetry.addData("ROLL", tag.ftcPose.roll);
-                telemetry.addData("BEARING", tag.ftcPose.bearing);
-                telemetry.addData("PITCH", tag.ftcPose.pitch);
-                telemetry.addData("RANGE", tag.ftcPose.range);
-                telemetry.addData("ELEVATION", tag.ftcPose.elevation);
-                telemetry.addData("ITS PASTA DAY", 1);
-            }
-            telemetry.update();
 
         }
     }
 
 
+
+    //Print the pose data of the april
+    //tag by the id of argument 1 (tagId).
+    //
+    //Arguments:
+    //
+    //tagId -> The ID of the tag to print the pose for (assuming its visible)
+    private void printAprilTagPoseInfo(int tagId) {
+
+        //Find the april tag by the id "tagId"
+        //and store the tags instance in "tag"
+        AprilTagDetection tag = camera.findTag(tagId);
+
+        //Print all the pose positions
+        //of "tag"
+        if (tag != null) {
+            telemetry.addData("X", tag.ftcPose.x);
+            telemetry.addData("Y", tag.ftcPose.y);
+            telemetry.addData("Z", tag.ftcPose.z);
+            telemetry.addData("YAW", tag.ftcPose.yaw);
+            telemetry.addData("ROLL", tag.ftcPose.roll);
+            telemetry.addData("BEARING", tag.ftcPose.bearing);
+            telemetry.addData("PITCH", tag.ftcPose.pitch);
+            telemetry.addData("RANGE", tag.ftcPose.range);
+            telemetry.addData("ELEVATION", tag.ftcPose.elevation);
+            telemetry.addData("ITS PASTA DAY", 1);
+        }
+
+        //Update the telemetry.
+        telemetry.update();
+
+    }
 
 }
