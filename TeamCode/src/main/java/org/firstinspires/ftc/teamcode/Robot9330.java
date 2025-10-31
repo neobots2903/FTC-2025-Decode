@@ -49,6 +49,10 @@ public class Robot9330 {
     double frontLeftPower, frontRightPower, backRightPower, backLeftPower; //Power for each of the motors.
 
 
+    //Our camera manager.
+    //Detects april tags and has some utiltites built in to return data
+    //reguarding the total amount of tags detected.
+    CameraManager camera;
     //The robots launcher system.
     //We use this system to launch balls and other objects
     //using our robot.
@@ -62,7 +66,15 @@ public class Robot9330 {
         //Old IMU intialization.
         //imu = opMode.hardwareMap.get(BNO055IMU.class, "imu");
         //imu.initialize(parameters);
-        
+
+        //Make "camera" an instance of "CameraManager"
+        //Pass an instance of "OpMode" to it so we can
+        //intialize hardware on the hardware map.
+        //The camera manager contains utilites for us
+        //to detect april tags and recieve data reguarding
+        //april tags within vision range.
+        camera = new CameraManager(opMode);
+
         //Get IMU from hardware.
         newIMU = opMode.hardwareMap.get(IMU.class, "imu");
 
