@@ -26,7 +26,7 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
 
     //Vectors
     Vector2d shootingPosition = new Vector2d(-20, -15); //The position to shot from.
-    double firingPositionRotation = 0.0; //The heading to aim for the goal to score from the firing position
+    double firingPositionRotation = 2.0; //The heading to aim for the goal to score from the firing position
 
     //Instance of the camera manager.
     //Allows for april tag vision.
