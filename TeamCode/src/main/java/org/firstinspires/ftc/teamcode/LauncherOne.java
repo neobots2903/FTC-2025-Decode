@@ -41,7 +41,7 @@ public class LauncherOne {
     //Reguarding ticks per rotation,
     //RPM to run the shooter, etc.
     int ticks_per_rotation = 1; //The total ticks for 1 rotation of the fly-wheel.
-    int shooter_rpm = 1200; //The RPM to run the shooter at.
+    int shooter_rpm = 2500; //The RPM to run the shooter at.
 
 
 
