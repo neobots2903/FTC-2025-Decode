@@ -40,8 +40,17 @@ public class LauncherOne {
     //Info for the launcher motors.
     //Reguarding ticks per rotation,
     //RPM to run the shooter, etc.
-    int ticks_per_rotation = 1; //The total ticks for 1 rotation of the fly-wheel.
-    int shooter_rpm = 2500; //The RPM to run the shooter at.
+    int ticks_per_rotation = 28; //The total ticks for 1 rotation of the fly-wheel.
+    //The RPM to run the shooter at for a far shot
+    int shooter_rpm_far = 4000;
+    //The shooter rpm in ticks per second for the far shot
+    int shooter_rpm_in_ticks_far = (ticks_per_rotation * shooter_rpm_far) / 60;
+    //The rpm for a close shot.
+    int shooter_rpm_close = 3500;
+    //The shooter rpm in ticks per second for the close shot
+    int shooter_rpm_in_ticks_close = (ticks_per_rotation * shooter_rpm_close) / 60;
+
+
 
 
 
@@ -149,15 +158,26 @@ public class LauncherOne {
     }
 
 
-    //Runs the launcher at the set RPM
+    //Runs the launcher at the set RPM for a far shot
     //for consistent launches
-    public void runLauncherAtSetRPM() {
+    public void runLauncherAtSetRPM_far() {
 
         //Run both the motors at the set velocity (shooter_rpm)
-        launchMotorOne.setVelocity(ticks_per_rotation * shooter_rpm);
-        launchMotorTwo.setVelocity(ticks_per_rotation * shooter_rpm);
+        launchMotorOne.setVelocity(shooter_rpm_in_ticks_far);
+        launchMotorTwo.setVelocity(shooter_rpm_in_ticks_far);
 
     }
+
+    //Runs the launcher at the set RPM for a close shot
+    //for consistent launches
+    public void runLauncherAtSetRPM_close() {
+
+        //Run both the motors at the set velocity (shooter_rpm)
+        launchMotorOne.setVelocity(shooter_rpm_in_ticks_close);
+        launchMotorTwo.setVelocity(shooter_rpm_in_ticks_close);
+
+    }
+
 
     //stops the launcher at the set RPM
     //for consistent launches; Sets velocity

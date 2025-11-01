@@ -24,10 +24,24 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     //These are positions and orientations/locations for the robot to reach
     Pose2d beginPose = new Pose2d(0, 0, Math.toRadians(0));
 
+    //Vectors
+    Vector2d shootingPosition = new Vector2d(-20, -15); //The position to shot from.
+    double firingPositionRotation = 0.0; //The heading to aim for the goal to score from the firing position
+
     //Instance of the camera manager.
     //Allows for april tag vision.
     CameraManager camera;
 
+
+    //Trajectory actions, lists of movements an actions
+    //we will follow in auto.
+    //Faces the robot toward the goal
+    //from the starting zone so we can line
+    TrajectoryActionBuilder toFiringPos;
+
+
+    //Actions, groups of final built trajectories
+    Action toFiringPosition;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,6 +49,15 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
         //Create an instance of the drive base
         //for the roadrunner system
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
+
+        //Setup the "toFiringPos" trjectory to get the bot to the firing positon.
+        //
+        //Trajectories:
+        //
+        //.strafeTo(shootingPosition) -> Strafe the robot to the roboting position
+        //with no rotations.
+        toFiringPos = drive.actionBuilder(beginPose).strafeTo(shootingPosition).turnTo(Math.toRadians(firingPositionRotation));
+        toFiringPosition = toFiringPos.build(); //Build the action, so we can run it.
 
         //Intialize the camera manager for
         //april tag vision
@@ -47,8 +70,18 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
         //Start the autonomous
         if (opModeIsActive()) {
 
+            telemetry.addData("Auto", "Running Auto");
+            telemetry.update();
+
+            //Run the action to get the bot to the
+            //firing position.
+            Actions.runBlocking(new SequentialAction(toFiringPosition));
+
+            drive.rightBack.setPower(1.0);
 
 
+            telemetry.addData("Auto", "Auto Finished");
+            telemetry.update();
         }
     }
 

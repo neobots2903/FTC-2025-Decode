@@ -86,34 +86,33 @@ public class TeleOpOne extends LinearOpMode {
                 robot.resetHeadless();
             }
 
-            //Controls for the launcher motors. WHen 'y' is pressed,
-            //we will run the launcher, pressing it again will kill
-            //the launcher motors. (Acts like a toggle)
+            //Controls for the launcher motors. WHen 'a' is held,
+            //we will run the launcher for a far shot.
             if (gamepad2.a) {
 
                 //Run the robot launcher.
-                robot.launcher.runLauncherAtSetRPM();
+                robot.launcher.runLauncherAtSetRPM_far();
 
-                //Set the launcherRunning to true,
-                //so that we know the launcher is running.
-                launcherRunning = true;
-
-                //Reset the cycles since the launcher toggle
-                //button was pressed, to prevent d-bounce.
-                cyclesSinceLauncherToggled = 0;
-
-            } else if (gamepad2.a != true && gamepad2.right_trigger == 0.0) {
+            } else if (gamepad2.a != true && gamepad2.right_trigger == 0.0 && gamepad2.x != true) {
 
                 //Stop the launcher from running.
                 robot.launcher.stopLauncherAtSetRPM();
 
-                //Set the launcherRunning to false,
-                //so that we know the launcher is not running.
-                launcherRunning = false;
+            }
 
-                //Reset the cycles since the launcher toggle
-                //button was pressed, to prevent d-bounce.
-                cyclesSinceLauncherToggled = 0;
+
+            //Controls for the launcher motors. WHen 'a' is held,
+            //we will run the launcher for a close shot.
+            if (gamepad2.x) {
+
+                //Run the robot launcher.
+                robot.launcher.runLauncherAtSetRPM_close();
+
+            } else if (gamepad2.x != true && gamepad2.right_trigger == 0.0 && gamepad2.a != true) {
+
+                //Stop the launcher from running.
+                robot.launcher.stopLauncherAtSetRPM();
+
             }
 
 
