@@ -25,7 +25,7 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     Pose2d beginPose = new Pose2d(0, 0, Math.toRadians(0));
 
     //Vectors
-    Vector2d shootingPosition = new Vector2d(-20, -15); //The position to shot from.
+    Vector2d shootingPosition = new Vector2d(-30, -15); //The position to shot from.
     double firingPositionRotation = 2.0; //The heading to aim for the goal to score from the firing position
 
     //Instance of the camera manager.

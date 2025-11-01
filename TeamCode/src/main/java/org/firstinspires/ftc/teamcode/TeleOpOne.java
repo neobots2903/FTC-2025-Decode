@@ -93,7 +93,7 @@ public class TeleOpOne extends LinearOpMode {
                 //Run the robot launcher.
                 robot.launcher.runLauncherAtSetRPM_far();
 
-            } else if (gamepad2.a != true && gamepad2.right_trigger == 0.0 && gamepad2.x != true) {
+            } else if (gamepad2.a != true && gamepad2.right_trigger == 0.0 && gamepad2.x != true && gamepad2.left_trigger == 0.0) {
 
                 //Stop the launcher from running.
                 robot.launcher.stopLauncherAtSetRPM();
@@ -108,7 +108,7 @@ public class TeleOpOne extends LinearOpMode {
                 //Run the robot launcher.
                 robot.launcher.runLauncherAtSetRPM_close();
 
-            } else if (gamepad2.x != true && gamepad2.right_trigger == 0.0 && gamepad2.a != true) {
+            } else if (gamepad2.x != true && gamepad2.right_trigger == 0.0 && gamepad2.a != true && gamepad2.left_trigger == 0.0) {
 
                 //Stop the launcher from running.
                 robot.launcher.stopLauncherAtSetRPM();
@@ -122,9 +122,14 @@ public class TeleOpOne extends LinearOpMode {
                 robot.runLauncher(gamepad2.right_trigger);
             }
 
+
+            if (gamepad2.left_trigger > 0.0) {
+                robot.launcher.runLauncher(-gamepad2.left_trigger);
+            }
+
             //Control system for the input into the shooter.
             //Allows the operator to input balls into the shooter
-            if (gamepad2.b) {
+            if (gamepad2.b && robot.launcher.getRPM() > 500) {
                 robot.runShooterInput();
             } else if (gamepad2.b != true) {
                 robot.killShooterInput();

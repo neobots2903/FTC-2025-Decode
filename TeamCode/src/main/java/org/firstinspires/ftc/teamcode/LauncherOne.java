@@ -158,6 +158,19 @@ public class LauncherOne {
     }
 
 
+
+    //Returns the current of the
+    //launcher. Converts current tick velocity
+    //to rpm.
+    public int getRPM() {
+        double rpm = 0;
+
+        rpm = (launchMotorOne.getVelocity() * 60) / ticks_per_rotation;
+
+        return (int)rpm;
+    }
+
+
     //Runs the launcher at the set RPM for a far shot
     //for consistent launches
     public void runLauncherAtSetRPM_far() {
