@@ -159,7 +159,7 @@ public class TeleOpOne extends LinearOpMode {
 
         //Based on inputs from driver on the bumpers, toggle the speed of the robot.
         if (gamepad1.left_bumper == true && timeSinceLastSpeedChange.milliseconds() > 200) {
-            if (speedMultiplier > 0.2) {
+            if (speedMultiplier > 0.4) {
                 speedMultiplier -= 0.2; //Change the speed multiplier.
                 timeSinceLastSpeedChange = new ElapsedTime(); //Reset the timer since the last speed change.
             }
@@ -169,5 +169,8 @@ public class TeleOpOne extends LinearOpMode {
                 timeSinceLastSpeedChange = new ElapsedTime(); //Reset the timer since the last speed change.
             }
         }
+
+        telemetry.addData("Speed multiplier: ", speedMultiplier);
+        telemetry.update();
     }
 }
