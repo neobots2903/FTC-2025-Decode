@@ -25,8 +25,8 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     Pose2d beginPose = new Pose2d(0, 0, Math.toRadians(0));
 
     //Vectors
-    Vector2d shootingPosition = new Vector2d(-30, -15); //The position to shot from.
-    double firingPositionRotation = 2.0; //The heading to aim for the goal to score from the firing position
+    Vector2d shootingPosition = new Vector2d(95, 0); //The position to shot from.
+    double firingPositionRotation = 52.00; //The heading to aim for the goal to score from the firing position
 
     //Instance of the camera manager.
     //Allows for april tag vision.
@@ -42,6 +42,9 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
 
     //Actions, groups of final built trajectories
     Action toFiringPosition;
+
+    //The launcher, to run the launcher in the auto
+    LauncherOne launcher;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -63,6 +66,9 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
         //april tag vision
         camera = new CameraManager(this);
 
+        //Setup/intialize the launcher
+        launcher = new LauncherOne(this);
+
         //Wait for the start to be hit on telemetry
         waitForStart();
 
@@ -70,18 +76,16 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
         //Start the autonomous
         if (opModeIsActive()) {
 
-            telemetry.addData("Auto", "Running Auto");
-            telemetry.update();
-
             //Run the action to get the bot to the
             //firing position.
             Actions.runBlocking(new SequentialAction(toFiringPosition));
 
-            drive.rightBack.setPower(1.0);
+            //Run the launcher at the set RPM for the close shot
+            launcher.runLauncherAtSetRPM_close();
 
-
-            telemetry.addData("Auto", "Auto Finished");
-            telemetry.update();
+            try {
+                Thread.sleep(10000);
+            } catch (Exception e) {}
         }
     }
 

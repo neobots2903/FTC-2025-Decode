@@ -9,11 +9,18 @@ package org.firstinspires.ftc.teamcode;
 *
 **/
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvWebcam;
+
+import java.util.List;
 
 @TeleOp(name="TeleOp", group="Linear OpMode")
 public class TeleOpOne extends LinearOpMode {
@@ -64,13 +71,28 @@ public class TeleOpOne extends LinearOpMode {
     double speedMultiplier = 1.0; //Multiplier of the speed for the robots driving.
     ElapsedTime timeSinceLastSpeedChange = new ElapsedTime(); //Time since the last speed input was entered by the driver, used mainly for debounce.
 
+    //Instance of the robot
+    Robot9330 robot;
+
+    //FTC dashboard for camera streaming
+    FtcDashboard dashboard;
+
+    //Onboard camera opencv for FTC dashboard stream
+    OpenCvWebcam camera;
 
     @Override
     public void runOpMode() {
-        Robot9330 robot = new Robot9330(this); //Instance of our robot and its hardware.
+        robot = new Robot9330(this); //Instance of our robot and its hardware.
         
         waitForStart(); //Wait until Init on Telemetry is hit before starting the robot.
-        
+
+        //Instance of FTC dashboard for debugging and other logs
+        dashboard = FtcDashboard.getInstance();
+
+        //System to stream camera to the FTC dashboard
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera_one"));
+        dashboard.startCameraStream(camera, 2);
+
         //Infinite application loop.
         while (opModeIsActive()) {
             
@@ -136,6 +158,12 @@ public class TeleOpOne extends LinearOpMode {
             }
 
 
+            //Print the IDs of all april tags we can see
+            //into the telemtry.
+            printOutAllTagIdsVisible();
+
+            //Print the power applied to the shooter manually
+            telemetry.addData("Launcher trigger power: ", gamepad2.right_trigger);
 
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
 
@@ -150,9 +178,32 @@ public class TeleOpOne extends LinearOpMode {
             //add in one application cycle, since
             //another application loop has completed.
             cyclesSinceLauncherToggled++;
+
+            //Update the telemetry output each cycle.
+            telemetry.update();
         }
     }
 
+    //Prints the ids of all tags we can see
+    public void printOutAllTagIdsVisible() {
+        //Print the IDs of all april tags we can see
+        //into the telemtry.
+        List<Integer> ids = robot.camera. getAllAprilTag_ids();
+
+        //String to store all detected tag ids
+        //inside of.
+        String tagsSeen = "";
+
+        //Take the list of all april tag ids we have,
+        //print each of them into a string then print it out
+        for (int tagIds : ids) {
+            tagsSeen += tagIds + ", ";
+        }
+
+        //Print list of all visible tags into
+        //telemetry stream.
+        telemetry.addData("Tag IDs seen: ", tagsSeen);
+    }
 
     //Allows the operator to tune the speed on the fly.
     public void speedToggle() {

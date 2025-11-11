@@ -55,6 +55,9 @@ public class Robot9330 {
     LauncherOne launcher;
 
 
+    //Instance of the camera system
+    CameraManager camera;
+
     //Constructor; Robot inits from here.
     public Robot9330(OpMode opMode) {
         this.opMode = opMode;
@@ -100,6 +103,9 @@ public class Robot9330 {
 
         //Setup the robots launcher system
         launcher = new LauncherOne(opMode);
+
+        //Setup the camera system for april tag detection
+        camera = new CameraManager(opMode);
 
     }
 
