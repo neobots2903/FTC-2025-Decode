@@ -147,6 +147,25 @@ public class LauncherOne {
         launchMotorTwo.setPower(power);
     }
 
+    /*
+    * Run the launcher at the set
+    * RPM defined by arg1 "rpm"
+    * */
+    public void runLaucnherAtRPM(int rpm) {
+        launchMotorOne.setVelocity(launcherRpmToTicks(rpm));
+        launchMotorTwo.setVelocity(launcherRpmToTicks(rpm));
+    }
+
+
+    /*
+    * Takes a argument, "rpm"
+    * and converts it into ticks and returns
+    * the value. This is useful for setting and running
+    * motors at a sepecific rpm for the launcher.
+    * */
+    public int launcherRpmToTicks(int rpm) {
+        return (ticks_per_rotation * rpm) / 60;
+    }
 
     //Kills the launcher, stops all motors
     //at 0.0 power.

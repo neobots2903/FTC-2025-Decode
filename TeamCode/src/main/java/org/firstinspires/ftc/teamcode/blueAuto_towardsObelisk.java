@@ -81,11 +81,13 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(toFiringPosition));
 
             //Run the launcher at the set RPM for the close shot
-            launcher.runLauncherAtSetRPM_close();
+            launcher.runLaucnherAtRPM(2300);
 
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {}
+
+            launcher.killLauncher();
         }
     }
 
