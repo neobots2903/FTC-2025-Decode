@@ -23,7 +23,7 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     //Vectors
     Vector2d shootingPosition = new Vector2d(95, 0); //The position to shot from.
     double firingPositionRotation = 52.00; //The heading to aim for the goal to score from the firing position
-    Vector2d parkPosition = new Vector2d(0, 95); //The position to park the robot at (in the human player zone)
+    Vector2d parkPosition = new Vector2d(30, 5); //The position to park the robot at (in the human player zone)
 
 
     //Poses;
@@ -109,7 +109,8 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
                 Thread.sleep(10000);
             } catch (Exception e) {}
 
-            //Actions.runBlocking(new SequentialAction(toParkingPosition));
+            //Leave the shooting zone to dodge penalty
+            Actions.runBlocking(new SequentialAction(toParkingPosition));
 
             launcher.killLauncher();
         }
