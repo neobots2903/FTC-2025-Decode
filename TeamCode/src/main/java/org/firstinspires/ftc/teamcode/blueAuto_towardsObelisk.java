@@ -20,13 +20,20 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 public class blueAuto_towardsObelisk extends LinearOpMode {
 
 
-    //Poses;
-    //These are positions and orientations/locations for the robot to reach
-    Pose2d beginPose = new Pose2d(0, 0, Math.toRadians(0));
-
     //Vectors
     Vector2d shootingPosition = new Vector2d(95, 0); //The position to shot from.
     double firingPositionRotation = 52.00; //The heading to aim for the goal to score from the firing position
+    Vector2d parkPosition = new Vector2d(0, 95); //The position to park the robot at (in the human player zone)
+
+
+    //Poses;
+    //These are positions and orientations/locations for the robot to reach
+    //Starting position for the robot (0, 0, rotation = 0)
+    Pose2d beginPose = new Pose2d(0, 0, Math.toRadians(0));
+    //The position to shoot the balls from.
+    //Equivalent of the rotation "firingPositionRotation" at the "shootingPosition"
+    Pose2d shootingPositionPose = new Pose2d(shootingPosition.x, shootingPosition.y, Math.toRadians(firingPositionRotation));
+
 
     //Instance of the camera manager.
     //Allows for april tag vision.
@@ -39,9 +46,15 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     //from the starting zone so we can line
     TrajectoryActionBuilder toFiringPos;
 
+    //The action to get to the
+    //"parking zone", I.E. the human
+    //player area.
+    TrajectoryActionBuilder toParkingPos;
+
 
     //Actions, groups of final built trajectories
     Action toFiringPosition;
+    Action toParkingPosition;
 
     //The launcher, to run the launcher in the auto
     LauncherOne launcher;
@@ -62,6 +75,11 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
         toFiringPos = drive.actionBuilder(beginPose).strafeTo(shootingPosition).turnTo(Math.toRadians(firingPositionRotation));
         toFiringPosition = toFiringPos.build(); //Build the action, so we can run it.
 
+        //Build the action to park the robot
+        //to the human player zone.
+        toParkingPos = drive.actionBuilder(shootingPositionPose).strafeTo(parkPosition);
+        toParkingPosition = toParkingPos.build();
+
         //Intialize the camera manager for
         //april tag vision
         camera = new CameraManager(this);
@@ -81,11 +99,17 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(toFiringPosition));
 
             //Run the launcher at the set RPM for the close shot
-            launcher.runLaucnherAtRPM(2300);
+            //Intial RPM: 3350
+            launcher.runLaucnherAtRPM(3275);
+
+            //Run the servo to input balls
+            launcher.inputIntoShooter();
 
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {}
+
+            //Actions.runBlocking(new SequentialAction(toParkingPosition));
 
             launcher.killLauncher();
         }

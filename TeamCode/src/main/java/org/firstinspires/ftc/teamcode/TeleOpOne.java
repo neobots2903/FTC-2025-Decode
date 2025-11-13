@@ -164,6 +164,8 @@ public class TeleOpOne extends LinearOpMode {
 
             //Print the power applied to the shooter manually
             telemetry.addData("Launcher trigger power: ", gamepad2.right_trigger);
+            //Print the launchers current RPM
+            telemetry.addData("Launchers current RPM: ", robot.launcher.getRPM());
 
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
 
