@@ -36,6 +36,9 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     Pose2d shootingPositionPose = new Pose2d(shootingPosition.x, shootingPosition.y, Math.toRadians(firingPositionRotation));
 
 
+    //The RPM to shoot balls at
+    int shooterRPM = 3250;
+
     //Instance of the camera manager.
     //Allows for april tag vision.
     CameraManager camera;
@@ -100,15 +103,8 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
             Actions.runBlocking(new SequentialAction(toFiringPosition));
 
             //Run the launcher at the set RPM for the close shot
-            //Intial RPM: 3250
-            launcher.runLaucnherAtRPM(3250);
-
-            //Run the servo to input balls
-            launcher.inputIntoShooter();
-
-            try {
-                Thread.sleep(10000);
-            } catch (Exception e) {}
+            //Fire all 3 balls, then return here to park.
+            fireThreeBalls();
 
             //Leave the shooting zone to dodge penalty
             Actions.runBlocking(new SequentialAction(toParkingPosition));
@@ -118,6 +114,54 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
     }
 
 
+    //Fires 3 balls at close range into the score
+    //zone. Waits until the launcher is up to speed
+    //before shooting.
+    private void fireThreeBalls() {
+
+        //The total balls that have been shot by
+        //the robot. (Not nessicairly scored)
+        int ballsShot = 0;
+
+        //Run the launcher at the set RPM
+        launcher.runLaucnherAtRPM(shooterRPM);
+
+        //Stay in this loop till
+        //we have fired 3 balls.
+        while (ballsShot < 3) {
+
+            //If the launcher motors are spinning within 100 RPM of the
+            //shooters resquested power for the shot, begin
+            //injecting a ball, as by the time its in, it will be at RPM.
+            if (launcher.getRPM() > shooterRPM - 100) {
+
+                //We detected we are wihtin RPM to begin
+                //shooting, start feeding a ball into the
+                //shooter.
+                launcher.inputIntoShooter();
+
+                //While the launcher is within 100 RPM of
+                //our requested launch rpm "shooterRPM",
+                //keep feeding a ball in;
+                //Once the RPM has dropped 100 or more RPM below
+                //the requested "shooterRPM" for a shot,
+                //we will exit this loop and kill the shooter
+                while (launcher.getRPM() > shooterRPM - 100) {
+                    launcher.inputIntoShooter();
+                }
+
+                //Kill the launcher, we feel below "shooterRPM" by 100
+                //RPM, likely having shot the ball.
+                launcher.stopInputIntoShooter();
+
+                //Register we shoot a ball.
+                ballsShot++;
+            }
+        }
+
+        launcher.runLaucnherAtRPM(0);
+        launcher.killLauncher();
+    }
 
     //Print the pose data of the april
     //tag by the id of argument 1 (tagId).
