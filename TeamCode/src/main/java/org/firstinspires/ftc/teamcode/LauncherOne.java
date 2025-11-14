@@ -55,7 +55,7 @@ public class LauncherOne {
 
 
     //The servo for dropping the ball/object into the launcher!
-    private CRServo shooterInput;
+    public CRServo shooterInput;
     double shooterInputOpenPosition = 1.0; //Position for the shooter input to be open.
     double shooterInputClosedPosition = 0.0; //Position for the shooter input to be closed.
 

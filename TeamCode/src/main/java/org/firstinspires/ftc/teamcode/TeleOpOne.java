@@ -167,6 +167,10 @@ public class TeleOpOne extends LinearOpMode {
             //Print the launchers current RPM
             telemetry.addData("Launchers current RPM: ", robot.launcher.getRPM());
 
+            //Print servo data for debugging
+            telemetry.addData("Servo Data: ", robot.launcher.shooterInput.getPortNumber());
+            telemetry.addData("Servo Data: ", robot.launcher.shooterInput.getManufacturer());
+
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
 
 

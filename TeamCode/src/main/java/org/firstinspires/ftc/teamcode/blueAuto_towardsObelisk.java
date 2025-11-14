@@ -104,7 +104,15 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
 
             //Run the launcher at the set RPM for the close shot
             //Fire all 3 balls, then return here to park.
-            fireThreeBalls();
+            //fireThreeBalls();
+
+            launcher.runLaucnherAtRPM(shooterRPM);
+            launcher.inputIntoShooter();
+
+            try {
+                Thread.sleep(10000);
+            } catch (Exception e) {}
+
 
             //Leave the shooting zone to dodge penalty
             Actions.runBlocking(new SequentialAction(toParkingPosition));
