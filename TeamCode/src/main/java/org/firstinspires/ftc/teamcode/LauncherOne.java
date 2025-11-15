@@ -100,7 +100,7 @@ public class LauncherOne {
         //input directions, this should make both motors spin the shaft
         //in the same direction.
         launchMotorOne.setDirection(DcMotorSimple.Direction.REVERSE);
-        //launchMotorTwo.setDirection(DcMotorSimple.Direction.REVERSE);
+        launchMotorTwo.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
