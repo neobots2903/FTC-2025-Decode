@@ -9,16 +9,20 @@ package org.firstinspires.ftc.teamcode;
 public class AutoConstants {
 
         //Shooter RPM for all autos
-        final int shooterRPM = 3250;
+        //Original: 3250
+        final int shooterRPM = 3880;
+        //How far from the RPM should we be to detect that
+        //a ball was launched
+        final int ballDetectedThreshhold = 500;
 
         //All the blue auto constants.
         //Corrdinates for Vectors, Positons,
         //Poses and values reguarding RPM, etc.
         //Red equivalent such as "red_shootingPosition_x" will
         //be equal to the negative of these.
-        final int blue_towardsOblesk_shootingPosition_x = 95;
-        final int blue_towardsOblesk_shootingPosition_y = -5;
-        final double blue_towardsOblesk_firingPositionRotation = 57.0;
+        final int blue_towardsOblesk_shootingPosition_x = 5; //95
+        final int blue_towardsOblesk_shootingPosition_y = 5; //5
+        final double blue_towardsOblesk_firingPositionRotation = 27.0; //52.0
         final int blue_towardsOblesk_parkPosition_x = 30;
         final int blue_towardsOblesk_parkPosition_y = 25;
 
