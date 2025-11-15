@@ -19,12 +19,14 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 @Autonomous
 public class redAuto_towardsObelisk extends LinearOpMode {
 
+    //Auto constants
+    AutoConstants constants = new AutoConstants();
 
     //Vectors
-    Vector2d shootingPosition = new Vector2d(95, -5); //The position to shot from.
+    Vector2d shootingPosition = new Vector2d(constants.red_towardsOblesk_shootingPosition_x, constants.red_towardsOblesk_shootingPosition_y); //The position to shot from.
     //Originally: 52.00
-    double firingPositionRotation = 57.00; //The heading to aim for the goal to score from the firing position
-    Vector2d parkPosition = new Vector2d(30, 25); //The position to park the robot at (in the human player zone)
+    double firingPositionRotation = constants.red_towardsOblesk_firingPositionRotation; //The heading to aim for the goal to score from the firing position
+    Vector2d parkPosition = new Vector2d(constants.red_towardsOblesk_parkPosition_x, constants.red_towardsOblesk_parkPosition_y); //The position to park the robot at (in the human player zone)
 
 
     //Poses;
@@ -37,7 +39,7 @@ public class redAuto_towardsObelisk extends LinearOpMode {
 
 
     //The RPM to shoot balls at
-    int shooterRPM = 3250;
+    int shooterRPM = constants.shooterRPM;
 
     //Instance of the camera manager.
     //Allows for april tag vision.
@@ -70,6 +72,12 @@ public class redAuto_towardsObelisk extends LinearOpMode {
         //for the roadrunner system
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
 
+
+
+        //Flip all our "Trajectory Action Builder" sequences so
+        //we can run the blues path but on the red side.
+        //flipToRed();
+
         //Setup the "toFiringPos" trjectory to get the bot to the firing positon.
         //
         //Trajectories:
@@ -80,10 +88,6 @@ public class redAuto_towardsObelisk extends LinearOpMode {
         //Build the action to park the robot
         //to the human player zone.
         toParkingPos = drive.actionBuilder(shootingPositionPose).strafeTo(parkPosition);
-
-        //Flip all our "Trajectory Action Builder" sequences so
-        //we can run the blues path but on the red side.
-        flipToRed();
 
         //Build the road runner paths
         toFiringPosition = toFiringPos.build(); //Build the action, so we can run it.

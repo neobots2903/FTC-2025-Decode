@@ -19,12 +19,14 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 @Autonomous
 public class blueAuto_towardsObelisk extends LinearOpMode {
 
+    //Auto constants
+    AutoConstants constants = new AutoConstants();
 
     //Vectors
-    Vector2d shootingPosition = new Vector2d(95, -5); //The position to shot from.
+    Vector2d shootingPosition = new Vector2d(constants.blue_towardsOblesk_shootingPosition_x, constants.blue_towardsOblesk_shootingPosition_y); //The position to shot from.
     //Originally: 52.00
-    double firingPositionRotation = 57.00; //The heading to aim for the goal to score from the firing position
-    Vector2d parkPosition = new Vector2d(30, 25); //The position to park the robot at (in the human player zone)
+    double firingPositionRotation = constants.blue_towardsOblesk_firingPositionRotation; //The heading to aim for the goal to score from the firing position
+    Vector2d parkPosition = new Vector2d(constants.blue_towardsOblesk_parkPosition_x, constants.blue_towardsOblesk_parkPosition_y); //The position to park the robot at (in the human player zone)
 
 
     //Poses;
@@ -37,7 +39,7 @@ public class blueAuto_towardsObelisk extends LinearOpMode {
 
 
     //The RPM to shoot balls at
-    int shooterRPM = 3250;
+    int shooterRPM = constants.shooterRPM;
 
     //Instance of the camera manager.
     //Allows for april tag vision.
