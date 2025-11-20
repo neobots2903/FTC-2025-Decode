@@ -13,6 +13,18 @@ public class AutoConstants {
         final int shooterRPM = 3880;
         //How far from the RPM should we be to detect that
         //a ball was launched
+
+        //Once the shooter's fly-wheel is within
+        //this RPM of set RPM "shooterRPM", we
+        //can begin to feed a ball into the shooter
+        //as we know by the time the ball is through,
+        //we are at or very close to said "shooterRPM"
+        final int shooterRPMThreshhold = shooterRPM - 200;
+
+        //The Thresh-hold drop off RPM, to detect when
+        // a ball was launched. Laymans-Terms: How
+        //much RPM drop off must happen to
+        //know a ball was shoot via the fly-wheel?
         final int ballDetectedThreshhold = 500;
 
         //All the blue auto constants.

@@ -156,80 +156,13 @@ public class towardsObeliskAuto {
 
         //Run the launcher at the set RPM for the close shot
         //Fire all 3 balls, then return here to park.
-        fireThreeBalls();
+        launcher.fireThreeBalls(constants.shooterRPM, constants.shooterRPMThreshhold);
 
         //Leave the shooting zone to dodge penalty
         Actions.runBlocking(new SequentialAction(toParkingPosition));
     }
 
 
-    //Fires 3 balls at close range into the score
-    //zone. Waits until the launcher is up to speed
-    //before shooting.
-    private void fireThreeBalls() {
-
-        //The total balls that have been shot by
-        //the robot. (Not nessicairly scored)
-        int ballsShot = 0;
-
-        //Run the launcher at the set RPM
-        launcher.runLaucnherAtRPM(shooterRPM);
-
-        //Stay in this loop till
-        //we have fired 3 balls.
-        while (ballsShot < 3) {
-
-            opMode.telemetry.addData("RPM: ", launcher.getRPM());
-            opMode.telemetry.update();
-
-            //If the launcher motors are spinning within 100 RPM of the
-            //shooters resquested power for the shot, begin
-            //injecting a ball, as by the time its in, it will be at RPM.
-            if (launcher.getRPM() > shooterRPM - rpmThreshold) {
-
-                //We detected we are wihtin RPM to begin
-                //shooting, start feeding a ball into the
-                //shooter.
-                launcher.inputIntoShooter();
-
-                //While the launcher is within 100 RPM of
-                //our requested launch rpm "shooterRPM",
-                //keep feeding a ball in;
-                //Once the RPM has dropped 100 or more RPM below
-                //the requested "shooterRPM" for a shot,
-                //we will exit this loop and kill the shooter
-                while (launcher.getRPM() > shooterRPM - rpmThreshold) {
-                    launcher.inputIntoShooter();
-                    opMode.telemetry.addData("RPM: ", launcher.getRPM());
-                    opMode.telemetry.update();
-                }
-
-                //Kill the launcher, we feel below "shooterRPM" by 100
-                //RPM, likely having shot the ball.
-                launcher.stopInputIntoShooter();
-
-                //Register we shoot a ball.
-                ballsShot++;
-
-                opMode.telemetry.addData("Balls shoot: ", ballsShot);
-                opMode.telemetry.addData("RPM: ", launcher.getRPM());
-                opMode.telemetry.update();
-            }
-
-            //If we shot the last ball,
-            //lets wait 500 milliseconds (1/2 second)
-            //so that we don't kill the shooter earlier as the
-            //ball is feeding through
-            if (ballsShot == 3) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {}
-            }
-        }
-
-        launcher.runLaucnherAtRPM(0);
-        launcher.killLauncher();
-    }
 
     //Print the pose data of the april
     //tag by the id of argument 1 (tagId).

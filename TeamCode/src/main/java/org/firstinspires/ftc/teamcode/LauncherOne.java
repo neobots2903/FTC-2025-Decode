@@ -104,6 +104,84 @@ public class LauncherOne {
     }
 
 
+    //Fires 3 balls at close range into the score
+    //zone. Waits until the launcher is up to speed
+    //before shooting.
+    //
+    //------Arguments-------
+    //
+    //RPM -> The RPM to run the launcher at for firing the 3 balls
+    //
+    //rpmThreshHold -> How far/close to the RPM, can we begin to feed a ball
+    //into the launcher?
+    public void fireThreeBalls(int RPM, int rpmThreshHold) {
+
+        //The total balls that have been shot by
+        //the robot. (Not nessicairly scored)
+        int ballsShot = 0;
+
+        //Run the launcher at the set RPM
+        runLaucnherAtRPM(RPM);
+
+        //Stay in this loop till
+        //we have fired 3 balls.
+        while (ballsShot < 3) {
+
+            opMode.telemetry.addData("RPM: ", getRPM());
+            opMode.telemetry.update();
+
+            //If the launcher motors are spinning within 100 RPM of the
+            //shooters resquested power for the shot, begin
+            //injecting a ball, as by the time its in, it will be at RPM.
+            if (getRPM() > RPM - rpmThreshHold) {
+
+                //We detected we are wihtin RPM to begin
+                //shooting, start feeding a ball into the
+                //shooter.
+                inputIntoShooter();
+
+                //While the launcher is within 100 RPM of
+                //our requested launch rpm "shooterRPM",
+                //keep feeding a ball in;
+                //Once the RPM has dropped 100 or more RPM below
+                //the requested "shooterRPM" for a shot,
+                //we will exit this loop and kill the shooter
+                while (getRPM() > RPM - rpmThreshHold) {
+                    inputIntoShooter();
+                    opMode.telemetry.addData("RPM: ", getRPM());
+                    opMode.telemetry.update();
+                }
+
+                //Kill the launcher, we feel below "shooterRPM" by 100
+                //RPM, likely having shot the ball.
+                stopInputIntoShooter();
+
+                //Register we shoot a ball.
+                ballsShot++;
+
+                opMode.telemetry.addData("Balls shoot: ", ballsShot);
+                opMode.telemetry.addData("RPM: ", getRPM());
+                opMode.telemetry.update();
+            }
+
+            //If we shot the last ball,
+            //lets wait 500 milliseconds (1/2 second)
+            //so that we don't kill the shooter earlier as the
+            //ball is feeding through
+            if (ballsShot == 3) {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {}
+            }
+        }
+
+        //Set the launcher to run at zero RPM,
+        //and to shut off the power to the launcher.
+        runLaucnherAtRPM(0);
+        killLauncher();
+    }
+
+
     //Sets up the color sensors
     //we are using in the launcher system
     /*private void initColorSensors() {

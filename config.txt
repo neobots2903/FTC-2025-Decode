@@ -5,4 +5,4 @@ drive motor left back: control hub motor port 0
 drive motor right back: control hub motor port 3
 shooter motor two (right): expansion hub motor port 1
 shooter motor one (left): expansion hub motor port 0
-shooterInput servo: Control Hub Servo Port 4
+shooterInput servo: Control Hub Servo Port 4l
