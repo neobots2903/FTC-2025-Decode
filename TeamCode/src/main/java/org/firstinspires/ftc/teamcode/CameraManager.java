@@ -83,6 +83,55 @@ public class CameraManager {
     }
 
 
+
+    //Returns the distance in units to the score area
+    //as an integer
+    //If no tag is detected, we return 0.
+    public double getDistanceToScore() {
+
+        //The distance to the april tag
+        //on the score area
+        double distance = 0;
+
+        //The two possible tags we can detect.
+        //We will store an instance of detected tags here.
+        AprilTagDetection possibleTagOne = null;
+        AprilTagDetection possibleTagTwo = null;
+        AprilTagDetection tag = null; //The tag we detected
+
+        //Try to detect both of the tags that
+        //exist in the teleop.
+        possibleTagOne = findTag(20); //Look for ID 20;
+        possibleTagTwo = findTag(24); //Look for ID 24;
+
+        //Check both the detections.
+        //If one of the detections exists, assign it to
+        //tag so we can get distance derived from the tag.
+        //If it doesn't exist, then we will return 0 distance
+        //later as tag = null.
+        if (possibleTagOne != null) {
+            tag = possibleTagOne;
+        } else if (possibleTagTwo != null) {
+            tag = possibleTagTwo;
+        }
+
+        //If no tags detected, return 0
+        if (tag == null) {
+            return 0.0;
+        }
+
+        //We have a tag detected,
+        //set the distance to the score
+        //area from the tag; "distance"
+        //will hold this value, return the
+        //distance.
+        distance = tag.ftcPose.y;
+
+        return distance;
+    }
+
+
+
     /*
     * Returns a 32 bit integer of the total april tags detected.
     * No other data about april tags will be returned, just the size
