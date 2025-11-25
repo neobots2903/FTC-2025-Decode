@@ -63,14 +63,15 @@ public class AutoConstants {
         * AUTO CONSTANTS FOR AWAY FROM OBELISK
         *
         * */
-        final int blue_awayObelisk_firingPosition_x = 0;
-        final int blue_awayObelisk_firingPosition_y = 15;
+        final int blue_awayObelisk_firingPosition_x = 60;
+        final int blue_awayObelisk_firingPosition_y = 0;
+        final double blue_awayObelisk_firingPosition_rotation = -132.0;
 
 
 
         final int red_awayObelisk_firingPosition_x = -blue_awayObelisk_firingPosition_x;
         final int red_awayObelisk_firingPosition_y = blue_awayObelisk_firingPosition_y;
-
+        final double red_awayObelisk_firingPosition_rotation = -blue_awayObelisk_firingPosition_rotation;
 
 
 

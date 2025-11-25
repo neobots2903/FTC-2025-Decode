@@ -20,9 +20,12 @@ public class awayObeliskAuto {
     // opMode allows access to hardware map and telemetry
     OpMode opMode;
 
+    LauncherOne launcher;
+
     //Vectors of our positions to move to in the auto
     Vector2d firingPosition; //Position to fire
     Vector2d parkingPosition; //Position to park
+    double firingRotation;
 
     // This action gets us to the firing position
     TrajectoryActionBuilder toFiringPosition;
@@ -42,11 +45,13 @@ public class awayObeliskAuto {
         //for the roadrunner system
         MecanumDrive drive = new MecanumDrive(opMode.hardwareMap, beginPose);
 
+        launcher = new LauncherOne(opMode);
+
         initAutoConstants();
 
 
         // This action will get us to our firing position
-        toFiringPosition = drive.actionBuilder(beginPose).strafeTo(firingPosition);
+        toFiringPosition = drive.actionBuilder(beginPose).strafeTo(firingPosition).turnTo(Math.toRadians(firingRotation));
         toFiringPos = toFiringPosition.build();
 
 
@@ -58,8 +63,10 @@ public class awayObeliskAuto {
 
         if (side == "BLUE") {
             firingPosition = new Vector2d(constants.blue_awayObelisk_firingPosition_x, constants.blue_awayObelisk_firingPosition_y);
+            firingRotation = constants.blue_awayObelisk_firingPosition_rotation;
         } else if (side == "RED") {
             firingPosition = new Vector2d(constants.red_awayObelisk_firingPosition_x, constants.red_awayObelisk_firingPosition_y);
+            firingRotation = constants.red_awayObelisk_firingPosition_rotation;
         }
 
     }
@@ -70,6 +77,9 @@ public class awayObeliskAuto {
         //Run the action to get the bot to the
         //firing position.
         Actions.runBlocking(new SequentialAction(toFiringPos));
+
+        launcher.fireThreeBalls(constants.shooterRPM, constants.shooterRPMThreshhold);
+
     }
 
 }

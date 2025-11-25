@@ -11,12 +11,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous
 public class redAuto_awayFromObelisk extends LinearOpMode {
 
+    awayObeliskAuto auto;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
+        auto = new awayObeliskAuto(this, "RED");
+
         waitForStart();
 
-
+        auto.runAuto();
 
     }
 }
