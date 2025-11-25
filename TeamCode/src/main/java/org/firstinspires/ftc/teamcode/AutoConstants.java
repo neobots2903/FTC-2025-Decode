@@ -49,4 +49,34 @@ public class AutoConstants {
         final double red_towardsOblesk_firingPositionRotation = -(blue_towardsOblesk_firingPositionRotation + 4.0); //Adds 4 due to the shooter not being centered
         final int red_towardsOblesk_parkPosition_x = blue_towardsOblesk_parkPosition_x;
         final int red_towardsOblesk_parkPosition_y = -blue_towardsOblesk_parkPosition_y;
+
+
+
+
+
+
+
+
+
+        /*
+        *
+        * AUTO CONSTANTS FOR AWAY FROM OBELISK
+        *
+        * */
+        final int blue_awayObelisk_firingPosition_x = 0;
+        final int blue_awayObelisk_firingPosition_y = 15;
+
+
+
+        final int red_awayObelisk_firingPosition_x = -blue_awayObelisk_firingPosition_x;
+        final int red_awayObelisk_firingPosition_y = blue_awayObelisk_firingPosition_y;
+
+
+
+
+
+
+
+
+
 }
