@@ -110,6 +110,7 @@ public class Robot9330 {
     }
 
 
+
     //Runs the launcher motor at the power
     //of argument 1.
     //
@@ -145,27 +146,6 @@ public class Robot9330 {
     //the ball into the shooter
     public void killShooterInput() {
         launcher.stopInputIntoShooter();
-    }
-
-
-    //Locks the rear tires of the robot in brake mode.
-    //Used for stability or drifting
-    public void engage_handbrake() {
-        motorDriveBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motorDriveBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
-
-
-    //Disengages the robots handbrake, unlocking the back tires
-    public void disengage_handbrake() {
-        motorDriveBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motorDriveBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-
-    
-    //Spins one motor; Used for testing.
-    public void spinOneMotor() {
-        motorDriveBackLeft.setPower(1);
     }
     
     

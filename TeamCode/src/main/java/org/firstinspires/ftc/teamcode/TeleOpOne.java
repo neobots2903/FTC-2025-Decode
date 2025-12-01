@@ -140,22 +140,21 @@ public class TeleOpOne extends LinearOpMode {
 
             //Run the robots launcher system using the right
             //trigger on the operator remote.
+            //This allows for manual shooter control.
             if (gamepad2.right_trigger > 0.0) {
                 robot.runLauncher(gamepad2.right_trigger);
             }
-
-
             if (gamepad2.left_trigger > 0.0) {
                 robot.launcher.runLauncher(-gamepad2.left_trigger);
             }
 
             //Control system for the input into the shooter.
             //Allows the operator to input balls into the shooter
-            if (gamepad2.b && robot.launcher.getRPM() > 500) {
+            /*if (gamepad2.b && robot.launcher.getRPM() > 500) {
                 robot.runShooterInput();
             } else if (gamepad2.b != true) {
                 robot.killShooterInput();
-            }
+            }*/
 
 
             //Print the IDs of all april tags we can see
