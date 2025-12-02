@@ -42,4 +42,14 @@ public class LEDSystem {
 
     }
 
+    // Creates a party RGB display
+    public void toggleShowMode(String color) {
+        if (color == "PARTY") {
+            blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_PARTY_PALETTE);
+        } else {
+            blinkinLedDriver.setPattern(RevBlinkinLedDriver.BlinkinPattern.BLACK);
+        }
+
+    }
+
 }
