@@ -54,6 +54,10 @@ public class Robot9330 {
     //using our robot.
     LauncherOne launcher;
 
+    //The instance of the roboots intake
+    //for intaking balls and running the indexing
+    //system.
+    indexIntakeSystem intake;
 
     //Instance of the camera system
     CameraManager camera;

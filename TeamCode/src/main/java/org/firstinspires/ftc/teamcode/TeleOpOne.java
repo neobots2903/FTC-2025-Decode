@@ -69,7 +69,14 @@ public class TeleOpOne extends LinearOpMode {
 
     //SPEED MULTIPLIER
     double speedMultiplier = 1.0; //Multiplier of the speed for the robots driving.
+
+    //Anti debounce timers,
+    //used so we have no debounce
+    //to log the time since we last pressed
+    //a button
     ElapsedTime timeSinceLastSpeedChange = new ElapsedTime(); //Time since the last speed input was entered by the driver, used mainly for debounce.
+    ElapsedTime timeSinceLastIndexCycle = new ElapsedTime()
+
 
     //Instance of the robot
     Robot9330 robot;
@@ -135,6 +142,23 @@ public class TeleOpOne extends LinearOpMode {
                 //Stop the launcher from running.
                 robot.launcher.stopLauncherAtSetRPM();
 
+            }
+
+            //System to run the intake if the intake
+            //button "b" on the operators remote is held
+            if (gamepad2.b == true) {
+                robot.intake.runIntake();
+            } else {
+                robot.intake.killIntake();
+            }
+
+            //Cycle the indexer when right_bumper
+            //is pressed by the operator.
+            //------
+            //Preventing debounce with elapsed timer.
+            if (gamepad2.right_bumper == true && timeSinceLastIndexCycle.milliseconds() > 200) {
+                robot.intake.cycleIntake();
+                timeSinceLastIndexCycle = new ElapsedTime();
             }
 
 
