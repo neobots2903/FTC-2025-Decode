@@ -75,7 +75,8 @@ public class TeleOpOne extends LinearOpMode {
     //to log the time since we last pressed
     //a button
     ElapsedTime timeSinceLastSpeedChange = new ElapsedTime(); //Time since the last speed input was entered by the driver, used mainly for debounce.
-    ElapsedTime timeSinceLastIndexCycle = new ElapsedTime()
+    ElapsedTime timeSinceLastIndexCycle = new ElapsedTime(); //Time since the last indexer cycle (to prevent debounce)
+    ElapsedTime timeSinceLastInputIntoLauncher = new ElapsedTime(); //Time since the last kicker toggle (for inputting ball) (to prevent debounce)
 
 
     //Instance of the robot
@@ -152,11 +153,24 @@ public class TeleOpOne extends LinearOpMode {
                 robot.intake.killIntake();
             }
 
+            //When y is pressed, input into the shooter
+            //and wait atleast 200 milliseconds to prevent
+            //debonce till another input is allowed.
+            if (gamepad2.y == true && timeSinceLastInputIntoLauncher.milliseconds() > 200) {
+                robot.intake.inputBall();
+                timeSinceLastInputIntoLauncher = new ElapsedTime();
+            } else {
+                robot.intake.stopInputtingBall();
+                timeSinceLastInputIntoLauncher = new ElapsedTime();
+            }
+
+
+
             //Cycle the indexer when right_bumper
             //is pressed by the operator.
             //------
             //Preventing debounce with elapsed timer.
-            if (gamepad2.right_bumper == true && timeSinceLastIndexCycle.milliseconds() > 200) {
+            if (gamepad2.right_bumper == true && timeSinceLastIndexCycle.milliseconds() > 200 && robot.intake.kickerEngaged == false) {
                 robot.intake.cycleIntake();
                 timeSinceLastIndexCycle = new ElapsedTime();
             }

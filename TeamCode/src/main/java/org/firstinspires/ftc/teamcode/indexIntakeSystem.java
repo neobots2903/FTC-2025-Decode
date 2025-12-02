@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
 * The "indexIntakeSystem".
@@ -39,7 +40,17 @@ public class indexIntakeSystem {
     //or decrement for backwards.
     private int indexerTicks = 0;
 
+    //Ticks to rotate the indexer by 1/3 rotation for the next ball.
     private int rotateIndexTicks = 96;
+
+    //If true, the kickers engaged
+    //to input a ball into the shooter
+    //and we can't rotate the indexer.
+    boolean kickerEngaged = false;
+
+    //The servo for the kicker to input into
+    //the launcher from the indexer.
+    Servo kicker;
 
     //Constructor
     public void indexIntakeSystem(OpMode opMode) {
@@ -54,6 +65,20 @@ public class indexIntakeSystem {
         //so they can be used. Intialize
         //them with the hardware map.
         initMotors();
+
+        //Intailize all servos so
+        //we can use them.
+        //Apply them to the hardware
+        //map, run setups, etc.
+        initServos();
+    }
+
+    private void initServos() {
+
+        //Intialize the kicker servo for
+        //inputing balls from the
+        //indexer into the launcher.
+        kicker = opMode.hardwareMap.get(Servo.class, "kicker");
 
     }
 
@@ -75,6 +100,34 @@ public class indexIntakeSystem {
 
     }
 
+
+    //Push a ball into the shooter
+    //with the kicker servo,
+    //also prevents the indexer
+    //from rotating until
+    //"kickerEngaged" is false.
+    public void inputBall() {
+
+        //Set the kicker to kick
+        //the ball into the launcher and set
+        //it as being engaged so
+        //that we don't break the kicker by preventing
+        //the indexer from rotating from teleop
+        //inputs, because "kickerEngaged" = true
+        kicker.setPosition(1.0);
+        kickerEngaged = true;
+    }
+
+    //Stop inputing a ball into the launcher
+    //and get ready for indexing again.
+    public void stopInputtingBall() {
+
+        //Move the kicker back to rest
+        //position, so we can rotate
+        //the indexer.
+        kicker.setPosition(0.0);
+        kickerEngaged = false;
+    }
 
     //Cycles the intake forward one time
     public void cycleIntake() {
