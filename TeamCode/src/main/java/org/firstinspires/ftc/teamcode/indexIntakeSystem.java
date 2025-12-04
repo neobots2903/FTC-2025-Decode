@@ -33,6 +33,15 @@ public class indexIntakeSystem {
     //in said position (Green, Purple, nothing, etc)
     ColorSensor LAUNCH_colorSensor;
 
+    //The LED control system
+    //for switching LED colors
+    //----
+    //Mainly used for indicating
+    //whats at the top of the index to
+    //be pushed to the shooter (Whats
+    //in LAUNCH position)
+    LEDSystem LED;
+
     //The indexes of the intake/ball storage
     //drum. We will set all these in "initIndexSystem()"
     //----
@@ -66,6 +75,9 @@ public class indexIntakeSystem {
         //telemetry and other IO and functions
         //within the FTC control suite.
         this.opMode = opMode;
+
+        //Intialize the LED system
+        LED = new LEDSystem(opMode);
 
         //Intialize all motors
         //so they can be used. Intialize
@@ -112,16 +124,16 @@ public class indexIntakeSystem {
                 //We will also set the ball state for the
                 //index to be what we detected (purple, green, etc)
                 if (LAUNCH_color == "PURPLE") {
-                    LED.color == Purple;
+                    LED.setIndicatorColor("PURPLE");
                     ball.ballState = Index.BallStates.PURPLE;
                 } else if (LAUNCH_color == "GREEN") {
-                    LED.color == Green;
+                    LED.setIndicatorColor("GREEN");
                     ball.ballState = Index.BallStates.GREEN;
                 }  else if (LAUNCH_color == "EMPTY") {
-                    LED.color == Black;
+                    LED.setIndicatorColor("EMPTY");
                     ball.ballState = Index.BallStates.EMPTY;
                 } else {
-                    LED.color == Blck;
+                    LED.setIndicatorColor("EMPTY");
                     ball.ballState = Index.BallStates.UNKNOWN;
                 }
             }
