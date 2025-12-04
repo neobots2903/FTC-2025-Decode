@@ -186,6 +186,13 @@ public class TeleOpOne extends LinearOpMode {
                 robot.launcher.runLauncher(-gamepad2.left_trigger);
             }
 
+            //Show whats up next for the launcher by
+            //displaying the color of whats at position
+            //LAUNCH in the indexer using the
+            //robots LED display system
+            robot.intake.showNextBallStatus();
+
+
             //Control system for the input into the shooter.
             //Allows the operator to input balls into the shooter
             /*if (gamepad2.b && robot.launcher.getRPM() > 500) {

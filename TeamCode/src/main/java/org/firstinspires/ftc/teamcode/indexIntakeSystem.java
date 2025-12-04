@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -26,6 +27,11 @@ public class indexIntakeSystem {
 
     //Motor for rotating the indexer
     private DcMotor indexerMotor;
+
+    //The color sensor in the LAUNCH Position
+    //of the Indexer to detect what is
+    //in said position (Green, Purple, nothing, etc)
+    ColorSensor LAUNCH_colorSensor;
 
     //The indexes of the intake/ball storage
     //drum. We will set all these in "initIndexSystem()"
@@ -71,7 +77,94 @@ public class indexIntakeSystem {
         //Apply them to the hardware
         //map, run setups, etc.
         initServos();
+
+        //Intialize all sensors,
+        //cameras, etc
+        initSensors();
     }
+
+
+    //Turns the robots on board
+    //LEDs to the current color
+    //of the ball next in the shooter.
+    public void showNextBallStatus() {
+
+        String LAUNCH_color = "";
+
+        //For each ball in the indexes array,
+        //we will check for which one is next to enter
+        //the shooter if the kicker is activated.
+        //(At state Index.currentPosition.Position.LAUNCH)
+        for (Index ball : indexes) {
+
+            //If the ball is at the launch position,
+            //determine its color and set LED color correctly.
+            if (ball.currentPosition == Index.Position.LAUNCH) {
+
+                //Set the LED color based on the ball in the index
+                LAUNCH_color = determineLAUNCHColor();
+
+                //Set the LED color based on what
+                //we detected from the color sensor
+                //system for our indexer "determineLAUNCHColor()"
+                //from the LAUNCH position.
+                //------
+                //We will also set the ball state for the
+                //index to be what we detected (purple, green, etc)
+                if (LAUNCH_color == "PURPLE") {
+                    LED.color == Purple;
+                    ball.ballState = Index.BallStates.PURPLE;
+                } else if (LAUNCH_color == "GREEN") {
+                    LED.color == Green;
+                    ball.ballState = Index.BallStates.GREEN;
+                }  else if (LAUNCH_color == "EMPTY") {
+                    LED.color == Black;
+                    ball.ballState = Index.BallStates.EMPTY;
+                } else {
+                    LED.color == Blck;
+                    ball.ballState = Index.BallStates.UNKNOWN;
+                }
+            }
+        }
+    }
+
+    //Returns the status of the object in the indexer
+    //-------
+    //Returns:
+    //
+    //"PURPLE" -> Purple color ball or object in LAUNCH Position
+    //
+    //"GREEN" -> Green color ball or object in LAUNCH Position
+    //
+    //"EMPTY" -> Nothing is there in LAUNCH Position
+    //
+    //"UNKNOWN" -> We don't know whats in the LAUNCH Position
+    private String determineLAUNCHColor() {
+
+        //The color we detected.
+        String colorDetected = "";
+
+        //If we see values closer to purple
+        //from the color sensor, then detect purple
+        if (LAUNCH_colorSensor.red() > 50 && LAUNCH_colorSensor.blue() > 50) {
+            colorDetected = "PURPLE";
+        }
+
+        //If we see values closer to green
+        //from the color sensor, then detect green
+        if (LAUNCH_colorSensor.green() > 70) {
+            colorDetected = "GREEN";
+        }
+
+        //If we didn't see Green or Purple,
+        //then just say its empty.
+        if (colorDetected == "") {
+            colorDetected = "EMPTY";
+        }
+
+        return colorDetected;
+    }
+
 
     private void initServos() {
 
@@ -79,6 +172,13 @@ public class indexIntakeSystem {
         //inputing balls from the
         //indexer into the launcher.
         kicker = opMode.hardwareMap.get(Servo.class, "kicker");
+
+    }
+
+    //Intializes all sensors (color sensors, cameras, etc)
+    private void initSensors() {
+
+        LAUNCH_colorSensor = opMode.hardwareMap.get(ColorSensor.class, "clrSensor");
 
     }
 
