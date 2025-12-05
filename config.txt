@@ -1,19 +1,21 @@
 Configuration of the motors, servos at hardware in hardware map:
 
-drive motor left front: control hub motor port 3
+drive motor left front: control hub motor port 2 /
 
-drive motor right front: expansion hub motor port 3
+drive motor right front: expansion hub motor port 3 /
 
-drive motor left back: control hub motor port 2
+drive motor left back: expansion hub motor port 0 ?
 
-drive motor right back: expansion hub motor port 2
+drive motor right back: expansion hub motor port 2 /
 
-shooter motor one (right): control hub motor port 0
+shooter motor one (right): expansion hub motor port 1 /
 
-intake motor: expansion hub motor port 1
+intake motor: expansion hub motor port 0 ?
 
-indexer spinner: Control hub motor port 1
+indexer spinner: Control hub motor port 3 /
 
-color sensor: Control hub Servo port 0
+color sensor: Expansion hub i2c port 0 
 
-indexer kicker: Expansion hub servo port 0
+indexer kicker: control hub servo port 0 /
+
+LED Driver: (Undetermined, control hub servo port 3 for now) /

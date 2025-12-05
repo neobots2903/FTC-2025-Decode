@@ -93,6 +93,11 @@ public class indexIntakeSystem {
         //Intialize all sensors,
         //cameras, etc
         initSensors();
+
+        //Intialize the index system.
+        //This will set all indexes as unknown and
+        //set each on to a possition.
+        initIndexSystem();
     }
 
 
@@ -255,6 +260,7 @@ public class indexIntakeSystem {
         //after we calculated an addition rotation
         //at ID: 892349827498274
         indexerMotor.setTargetPosition(indexerTicks);
+        indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //Logic to flip all the indexs positions to what they should be
         if (indexes[0].currentPosition == Index.Position.INTAKE) {
@@ -291,6 +297,7 @@ public class indexIntakeSystem {
         //mode whilst reseting the encoder to 0 ticks
         indexerMotor = opMode.hardwareMap.get(DcMotor.class, "indexMotor");
         indexerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        indexerMotor.setTargetPosition(0);
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //REVERSE MOTORS
