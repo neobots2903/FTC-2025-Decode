@@ -111,6 +111,8 @@ public class Robot9330 {
         //Setup the camera system for april tag detection
         camera = new CameraManager(opMode);
 
+        intake = new indexIntakeSystem(opMode);
+
     }
 
 
@@ -139,20 +141,6 @@ public class Robot9330 {
         motorDriveBackRight.setPower(1);
     }
 
-
-
-
-    //Use the shooter interface to input
-    //the ball into the shooter
-    public void runShooterInput() {
-        launcher.inputIntoShooter();
-    }
-
-    //Use the shooter interface to kill the input
-    //the ball into the shooter
-    public void killShooterInput() {
-        launcher.stopInputIntoShooter();
-    }
     
     
     //Robot move method. Moves the robot based on the controller stick inputs.

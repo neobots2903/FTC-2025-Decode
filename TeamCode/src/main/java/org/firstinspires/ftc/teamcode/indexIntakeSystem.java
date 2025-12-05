@@ -23,7 +23,7 @@ public class indexIntakeSystem {
 
     //Intake motors for intaking ground
     //balls into the indexer.
-    private DcMotorEx intakeMotor;
+    public DcMotorEx intakeMotor;
 
     //Motor for rotating the indexer
     private DcMotor indexerMotor;
@@ -68,7 +68,7 @@ public class indexIntakeSystem {
     Servo kicker;
 
     //Constructor
-    public void indexIntakeSystem(OpMode opMode) {
+    public indexIntakeSystem(OpMode opMode) {
 
         //Intialize the opmode within this class
         //so we have access to the hardware map,

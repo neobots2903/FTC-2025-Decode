@@ -150,6 +150,7 @@ public class TeleOpOne extends LinearOpMode {
             if (gamepad2.b == true) {
                 robot.intake.runIntake();
             } else {
+                //robot.intake.killIntake();
                 robot.intake.killIntake();
             }
 
@@ -210,10 +211,6 @@ public class TeleOpOne extends LinearOpMode {
             telemetry.addData("Launcher trigger power: ", gamepad2.right_trigger);
             //Print the launchers current RPM
             telemetry.addData("Launchers current RPM: ", robot.launcher.getRPM());
-
-            //Print servo data for debugging
-            telemetry.addData("Servo Data: ", robot.launcher.shooterInput.getPortNumber());
-            telemetry.addData("Servo Data: ", robot.launcher.shooterInput.getManufacturer());
 
             speedToggle(); //Allow the driver to change the speed multiplier with the bumpers.
 

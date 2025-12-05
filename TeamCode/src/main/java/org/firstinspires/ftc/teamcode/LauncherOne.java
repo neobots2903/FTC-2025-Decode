@@ -53,14 +53,6 @@ public class LauncherOne {
 
 
 
-
-    //The servo for dropping the ball/object into the launcher!
-    public CRServo shooterInput;
-    double shooterInputOpenPosition = 1.0; //Position for the shooter input to be open.
-    double shooterInputClosedPosition = 0.0; //Position for the shooter input to be closed.
-
-
-
     //Constructor
     public LauncherOne(OpMode opMode) {
 
@@ -76,18 +68,6 @@ public class LauncherOne {
         //Initalizing the Motors
         initMotors();
 
-        //Intialize all servos onboard the robot
-        initServos();
-    }
-
-
-    //Intializes the servos inside the robot.
-    //Called from the constructor of this class.
-    private void initServos() {
-
-        //Create an instance of the shooter input servo in
-        //the opmode hardware map.
-        shooterInput = opMode.hardwareMap.get(CRServo.class, "shooterInput");
     }
 
 
@@ -135,26 +115,7 @@ public class LauncherOne {
             //injecting a ball, as by the time its in, it will be at RPM.
             if (getRPM() > RPM - rpmThreshHold) {
 
-                //We detected we are wihtin RPM to begin
-                //shooting, start feeding a ball into the
-                //shooter.
-                inputIntoShooter();
 
-                //While the launcher is within 100 RPM of
-                //our requested launch rpm "shooterRPM",
-                //keep feeding a ball in;
-                //Once the RPM has dropped 100 or more RPM below
-                //the requested "shooterRPM" for a shot,
-                //we will exit this loop and kill the shooter
-                while (getRPM() > RPM - rpmThreshHold) {
-                    inputIntoShooter();
-                    opMode.telemetry.addData("RPM: ", getRPM());
-                    opMode.telemetry.update();
-                }
-
-                //Kill the launcher, we feel below "shooterRPM" by 100
-                //RPM, likely having shot the ball.
-                stopInputIntoShooter();
 
                 //Register we shoot a ball.
                 ballsShot++;
@@ -190,19 +151,6 @@ public class LauncherOne {
         //the hardware map.
         launcherColorSensor = opMode.hardwareMap.get(ColorSensor.class, "launcherColorSensor");
     }*/
-
-
-    //Moves the shooter input servo
-    //to feed a ball into the shooter
-    public void inputIntoShooter() {
-        shooterInput.setPower(1.0);
-    }
-
-    //Stops the servo feeding balls
-    //into the shooter
-    public void stopInputIntoShooter() {
-        shooterInput.setPower(0.0);
-    }
 
 
     //Moves the shooter input servo
