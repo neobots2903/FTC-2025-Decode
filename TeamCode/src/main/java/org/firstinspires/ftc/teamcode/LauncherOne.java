@@ -34,7 +34,7 @@ public class LauncherOne {
     //launchMotorTwo is spinning in reverse since both
     //these motors are on the same shaft.
     private DcMotorEx launchMotorOne;
-    private DcMotorEx launchMotorTwo;
+    //private DcMotorEx launchMotorTwo;
 
 
     //Info for the launcher motors.
@@ -93,14 +93,14 @@ public class LauncherOne {
 
     private void initMotors() {
         launchMotorOne = opMode.hardwareMap.get(DcMotorEx.class, "launchMotorOne");
-        launchMotorTwo = opMode.hardwareMap.get(DcMotorEx.class, "launchMotorTwo");
+        //launchMotorTwo = opMode.hardwareMap.get(DcMotorEx.class, "launchMotorTwo");
 
         //Reverse the launchMotorTwo, since launchMotorTwo
         //and launchMotorOne are both on the same shaft, with opposite
         //input directions, this should make both motors spin the shaft
         //in the same direction.
         launchMotorOne.setDirection(DcMotorSimple.Direction.REVERSE);
-        launchMotorTwo.setDirection(DcMotorSimple.Direction.REVERSE);
+        //launchMotorTwo.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
@@ -222,7 +222,7 @@ public class LauncherOne {
     //-"power" -> Runs the launch motors at this power
     public void runLauncher(double power) {
         launchMotorOne.setPower(power);
-        launchMotorTwo.setPower(power);
+        //launchMotorTwo.setPower(power);
     }
 
     /*
@@ -231,7 +231,7 @@ public class LauncherOne {
     * */
     public void runLaucnherAtRPM(int rpm) {
         launchMotorOne.setVelocity(launcherRpmToTicks(rpm));
-        launchMotorTwo.setVelocity(launcherRpmToTicks(rpm));
+        //launchMotorTwo.setVelocity(launcherRpmToTicks(rpm));
     }
 
 
@@ -251,7 +251,7 @@ public class LauncherOne {
     //will stop (0 power)
     public void killLauncher() {
         launchMotorOne.setPower(0.0);
-        launchMotorTwo.setPower(0.0);
+        //launchMotorTwo.setPower(0.0);
     }
 
 
@@ -274,7 +274,7 @@ public class LauncherOne {
 
         //Run both the motors at the set velocity (shooter_rpm)
         launchMotorOne.setVelocity(shooter_rpm_in_ticks_far);
-        launchMotorTwo.setVelocity(shooter_rpm_in_ticks_far);
+        //launchMotorTwo.setVelocity(shooter_rpm_in_ticks_far);
 
     }
 
@@ -284,7 +284,7 @@ public class LauncherOne {
 
         //Run both the motors at the set velocity (shooter_rpm)
         launchMotorOne.setVelocity(shooter_rpm_in_ticks_close);
-        launchMotorTwo.setVelocity(shooter_rpm_in_ticks_close);
+        //launchMotorTwo.setVelocity(shooter_rpm_in_ticks_close);
 
     }
 
@@ -296,7 +296,7 @@ public class LauncherOne {
 
         //Run both the motors at the set velocity (shooter_rpm)
         launchMotorOne.setVelocity(0.0);
-        launchMotorTwo.setVelocity(0.0);
+        //launchMotorTwo.setVelocity(0.0);
 
     }
 
