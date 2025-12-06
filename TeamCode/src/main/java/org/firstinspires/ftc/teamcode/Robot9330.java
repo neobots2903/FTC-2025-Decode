@@ -72,10 +72,9 @@ public class Robot9330 {
         
         //Get IMU from hardware.
         newIMU = opMode.hardwareMap.get(IMU.class, "imu");
-
         //Setup robot orientation information for IMU initalization; Default setup, will change if robot is comp bot.
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+        RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
+        RevHubOrientationOnRobot.UsbFacingDirection usbDirection = RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
 
         //Orientation of the IMU, for initalizing the new IMU interface.
