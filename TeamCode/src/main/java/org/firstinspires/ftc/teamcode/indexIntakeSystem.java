@@ -28,7 +28,7 @@ public class indexIntakeSystem {
     public DcMotorEx intakeMotor;
 
     //Motor for rotating the indexer
-    private DcMotor indexerMotor;
+    public DcMotor indexerMotor;
 
     //The color sensor in the LAUNCH Position
     //of the Indexer to detect what is
@@ -55,7 +55,7 @@ public class indexIntakeSystem {
     //the indexer is set to run to this position
     //to more the index forward, increment by "rotateIndexTicks"
     //or decrement for backwards.
-    private int indexerTicks = 0;
+    public int indexerTicks = 0;
 
     //Ticks to rotate the indexer by 1/3 rotation for the next ball.
     private int rotateIndexTicks = 96;
@@ -268,6 +268,7 @@ public class indexIntakeSystem {
         //at ID: 892349827498274
         indexerMotor.setTargetPosition(indexerTicks);
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        indexerMotor.setPower(0.50);
 
         //Logic to flip all the indexs positions to what they should be
         if (indexes.get(0).currentPosition == Index.Position.INTAKE) {
@@ -310,7 +311,7 @@ public class indexIntakeSystem {
         //REVERSE MOTORS
         //Reverse any motors if needed.
         intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        //indexerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        indexerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     //Runs the intake motor for intake

@@ -154,18 +154,21 @@ public class TeleOpOne extends LinearOpMode {
                 robot.intake.killIntake();
             }
 
+
             //When y is pressed, input into the shooter
             //and wait atleast 200 milliseconds to prevent
             //debonce till another input is allowed.
-            if (gamepad2.y == true && timeSinceLastInputIntoLauncher.milliseconds() > 200) {
+            if (gamepad2.y == true) {
                 robot.intake.inputBall();
-                timeSinceLastInputIntoLauncher = new ElapsedTime();
             } else {
                 robot.intake.stopInputtingBall();
-                timeSinceLastInputIntoLauncher = new ElapsedTime();
             }
 
 
+            telemetry.addData("TIME: ", timeSinceLastIndexCycle);
+            telemetry.addData("Kicker Engaged: ", robot.intake.kickerEngaged);
+            telemetry.addData("Indexer position to be:", robot.intake.indexerTicks);
+            telemetry.addData("Indexer current position:", robot.intake.indexerMotor.getCurrentPosition());
 
             //Cycle the indexer when right_bumper
             //is pressed by the operator.
