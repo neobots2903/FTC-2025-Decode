@@ -28,7 +28,7 @@ public class indexIntakeSystem {
     public DcMotorEx intakeMotor;
 
     //Motor for rotating the indexer
-    public DcMotor indexerMotor;
+    public DcMotorEx indexerMotor;
 
     //The color sensor in the LAUNCH Position
     //of the Indexer to detect what is
@@ -268,7 +268,7 @@ public class indexIntakeSystem {
         //at ID: 892349827498274
         indexerMotor.setTargetPosition(indexerTicks);
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        indexerMotor.setPower(0.50);
+        indexerMotor.setPower(1.0);
 
         //Logic to flip all the indexs positions to what they should be
         if (indexes.get(0).currentPosition == Index.Position.INTAKE) {
@@ -303,7 +303,7 @@ public class indexIntakeSystem {
         //-----
         //Set the motor to run to position
         //mode whilst reseting the encoder to 0 ticks
-        indexerMotor = opMode.hardwareMap.get(DcMotor.class, "indexMotor");
+        indexerMotor = opMode.hardwareMap.get(DcMotorEx.class, "indexMotor");
         indexerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         indexerMotor.setTargetPosition(0);
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
