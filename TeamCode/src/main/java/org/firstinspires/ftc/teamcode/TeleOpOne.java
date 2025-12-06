@@ -11,6 +11,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -169,6 +171,7 @@ public class TeleOpOne extends LinearOpMode {
             telemetry.addData("Kicker Engaged: ", robot.intake.kickerEngaged);
             telemetry.addData("Indexer position to be:", robot.intake.indexerTicks);
             telemetry.addData("Indexer current position:", robot.intake.indexerMotor.getCurrentPosition());
+            telemetry.addData("Indexer Motor Coefs: ", robot.intake.indexerMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION));
 
             //Cycle the indexer when right_bumper
             //is pressed by the operator.

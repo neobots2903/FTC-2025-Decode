@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.ArrayList;
@@ -270,6 +271,7 @@ public class indexIntakeSystem {
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         indexerMotor.setPower(1.0);
 
+
         //Logic to flip all the indexs positions to what they should be
         if (indexes.get(0).currentPosition == Index.Position.INTAKE) {
             indexes.get(0).currentPosition = Index.Position.OFFHAND;
@@ -298,6 +300,11 @@ public class indexIntakeSystem {
         //and configure it.
         intakeMotor = opMode.hardwareMap.get(DcMotorEx.class, "intakeMotor");
 
+        //Pidf coefficients are set here for the indexer motor.
+        //DcMotorEx default pid loop for the indexer
+        //will use these coefficents.
+        //PIDFCoefficients pidfCoefficients = new PIDFCoefficients(15.0, 0.05, 0.0, 0.0);
+
         //Intialize the motor for rotating
         //the indexer.
         //-----
@@ -306,6 +313,9 @@ public class indexIntakeSystem {
         indexerMotor = opMode.hardwareMap.get(DcMotorEx.class, "indexMotor");
         indexerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         indexerMotor.setTargetPosition(0);
+        //Set the pidf coefficents for the indexerMotor for revolving
+        //the indexer.
+        indexerMotor.setPositionPIDFCoefficients(50.0);
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //REVERSE MOTORS
