@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.ArrayList;
+
 /*
 * The "indexIntakeSystem".
 * This class manages intaking and indexing for the shooter.
@@ -46,7 +48,7 @@ public class indexIntakeSystem {
     //drum. We will set all these in "initIndexSystem()"
     //----
     //indexHold -> Temporary holds an index for logic and computation when cycling, etc.
-    private Index[] indexes = new Index[2];
+    private ArrayList<Index> indexes = new ArrayList<Index>();
     private Index indexHold; //Temporary holds an index for logic and computation when cycling, etc.
 
     //The indexers position to be at,
@@ -203,17 +205,22 @@ public class indexIntakeSystem {
     //so we can figure out where stuff is
     private void initIndexSystem() {
 
+        //Create 3 new indexes.
+        for (int i = 0; i < 3; i++) {
+            indexes.add(new Index());
+        }
+
         //Setup the first index
-        indexes[0].ballState = Index.BallStates.UNKNOWN;
-        indexes[0].currentPosition = Index.Position.INTAKE;
+        indexes.get(0).ballState = Index.BallStates.UNKNOWN;
+        indexes.get(0).currentPosition = Index.Position.INTAKE;
 
         //Setup the second index
-        indexes[1].ballState = Index.BallStates.UNKNOWN;
-        indexes[1].currentPosition = Index.Position.OFFHAND;
+        indexes.get(1).ballState = Index.BallStates.UNKNOWN;
+        indexes.get(1).currentPosition = Index.Position.OFFHAND;
 
         //Setup the third index
-        indexes[2].ballState = Index.BallStates.UNKNOWN;
-        indexes[2].currentPosition = Index.Position.LAUNCH;
+        indexes.get(2).ballState = Index.BallStates.UNKNOWN;
+        indexes.get(2).currentPosition = Index.Position.LAUNCH;
 
     }
 
@@ -263,18 +270,18 @@ public class indexIntakeSystem {
         indexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //Logic to flip all the indexs positions to what they should be
-        if (indexes[0].currentPosition == Index.Position.INTAKE) {
-            indexes[0].currentPosition = Index.Position.OFFHAND;
-            indexes[1].currentPosition = Index.Position.LAUNCH;
-            indexes[2].currentPosition = Index.Position.INTAKE;
-        } else if (indexes[0].currentPosition == Index.Position.OFFHAND) {
-            indexes[0].currentPosition = Index.Position.LAUNCH;
-            indexes[1].currentPosition = Index.Position.INTAKE;
-            indexes[2].currentPosition = Index.Position.OFFHAND;
-        } else if (indexes[0].currentPosition == Index.Position.LAUNCH) {
-            indexes[0].currentPosition = Index.Position.INTAKE;
-            indexes[1].currentPosition = Index.Position.OFFHAND;
-            indexes[2].currentPosition = Index.Position.LAUNCH;
+        if (indexes.get(0).currentPosition == Index.Position.INTAKE) {
+            indexes.get(0).currentPosition = Index.Position.OFFHAND;
+            indexes.get(1).currentPosition = Index.Position.LAUNCH;
+            indexes.get(2).currentPosition = Index.Position.INTAKE;
+        } else if (indexes.get(0).currentPosition == Index.Position.OFFHAND) {
+            indexes.get(0).currentPosition = Index.Position.LAUNCH;
+            indexes.get(1).currentPosition = Index.Position.INTAKE;
+            indexes.get(2).currentPosition = Index.Position.OFFHAND;
+        } else if (indexes.get(0).currentPosition == Index.Position.LAUNCH) {
+            indexes.get(0).currentPosition = Index.Position.INTAKE;
+            indexes.get(1).currentPosition = Index.Position.OFFHAND;
+            indexes.get(2).currentPosition = Index.Position.LAUNCH;
         }
 
     }
@@ -302,7 +309,7 @@ public class indexIntakeSystem {
 
         //REVERSE MOTORS
         //Reverse any motors if needed.
-        //intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         //indexerMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
@@ -315,7 +322,7 @@ public class indexIntakeSystem {
         //should not matter very much since we
         //are simply sucking the ball in and
         //don't need a trajectory.
-        intakeMotor.setPower(0.3);
+        intakeMotor.setPower(1.0);
     }
 
 
