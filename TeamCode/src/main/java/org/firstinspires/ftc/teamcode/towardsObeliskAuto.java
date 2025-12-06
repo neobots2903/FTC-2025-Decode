@@ -156,7 +156,7 @@ public class towardsObeliskAuto {
 
         //Run the launcher at the set RPM for the close shot
         //Fire all 3 balls, then return here to park.
-        launcher.fireThreeBalls(constants.shooterRPM, constants.shooterRPMThreshhold);
+        launcher.fireThreeBalls(constants.shooterRPM, constants.ballDetectedThreshhold);
 
         //Leave the shooting zone to dodge penalty
         Actions.runBlocking(new SequentialAction(toParkingPosition));

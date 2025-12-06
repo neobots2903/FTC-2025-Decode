@@ -149,6 +149,8 @@ public class LauncherOne {
                 while (getRPM() > RPM - rpmThreshHold) {
                     inputIntoShooter();
                     opMode.telemetry.addData("RPM: ", getRPM());
+                    opMode.telemetry.addData("If less than: ", RPM - rpmThreshHold);
+                    opMode.telemetry.addData("Shoots detected: ", ballsShot);
                     opMode.telemetry.update();
                 }
 
