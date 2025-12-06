@@ -160,7 +160,6 @@ public class indexIntakeSystem {
     //
     //"UNKNOWN" -> We don't know whats in the LAUNCH Position
     private String determineLAUNCHColor() {
-
         //The color we detected.
         String colorDetected = "";
 

@@ -172,6 +172,7 @@ public class TeleOpOne extends LinearOpMode {
             telemetry.addData("Indexer position to be:", robot.intake.indexerTicks);
             telemetry.addData("Indexer current position:", robot.intake.indexerMotor.getCurrentPosition());
             telemetry.addData("Indexer Motor Coefs: ", robot.intake.indexerMotor.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION));
+            telemetry.addData("Colors seen by sen: ", (String.valueOf(robot.intake.LAUNCH_colorSensor.red()) + ", " + String.valueOf(robot.intake.LAUNCH_colorSensor.green()) + ", " + String.valueOf(robot.intake.LAUNCH_colorSensor.blue())));
 
             //Cycle the indexer when right_bumper
             //is pressed by the operator.
