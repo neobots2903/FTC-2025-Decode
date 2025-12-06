@@ -165,19 +165,19 @@ public class indexIntakeSystem {
 
         //If we see values closer to purple
         //from the color sensor, then detect purple
-        if (LAUNCH_colorSensor.red() > 50 && LAUNCH_colorSensor.blue() > 50) {
-            colorDetected = "PURPLE";
+        if (LAUNCH_colorSensor.green() > 200) {
+            colorDetected = "GREEN";
         }
 
         //If we see values closer to green
         //from the color sensor, then detect green
-        if (LAUNCH_colorSensor.green() > 70) {
-            colorDetected = "GREEN";
+        else if (LAUNCH_colorSensor.green() > 100) {
+            colorDetected = "PURPLE";
         }
 
         //If we didn't see Green or Purple,
         //then just say its empty.
-        if (colorDetected == "") {
+        else if (colorDetected == "") {
             colorDetected = "EMPTY";
         }
 
